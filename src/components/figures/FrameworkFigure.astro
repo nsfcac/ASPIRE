@@ -5,7 +5,7 @@ const order: ThrustId[] = ['systems', 'ai-systems', 'trust'];
 const colW = 296;
 const gap = 20;
 const startX = 20;
-const cardY = 422;
+const cardY = 476;
 const cardH = 170;
 
 // Wrap into two lines (sequential, not greedy-refill). Done in frontmatter:
@@ -32,7 +32,7 @@ const drivers = [
 ];
 ---
 
-<svg viewBox="0 0 960 682" role="img" aria-labelledby="fw-title fw-desc" class="framework-fig">
+<svg viewBox="0 0 960 736" role="img" aria-labelledby="fw-title fw-desc" class="framework-fig">
   <title id="fw-title">ASPIRE program framework</title>
   <desc id="fw-desc">
     National drivers feed an intellectual core at the intersection of artificial intelligence and
@@ -46,7 +46,7 @@ const drivers = [
       <path d="M0 0 L10 5 L0 10 z" fill="var(--axis)" />
     </marker>
     <clipPath id="fw-clip-ai">
-      <circle cx="395" cy="256" r="140" />
+      <circle cx="370" cy="285" r="165" />
     </clipPath>
   </defs>
 
@@ -63,29 +63,29 @@ const drivers = [
   <path d="M480 92 L480 108" stroke="var(--axis)" stroke-width="2" marker-end="url(#fw-arrow)" />
 
   <!-- Band 2: the intersection -->
-  <circle cx="395" cy="256" r="140" fill="var(--c-1-soft)" stroke="var(--c-1)" stroke-width="2" />
-  <circle cx="565" cy="256" r="140" fill="var(--c-2-soft)" stroke="var(--c-2)" stroke-width="2" />
+  <circle cx="370" cy="285" r="165" fill="var(--c-1-soft)" stroke="var(--c-1)" stroke-width="2" />
+  <circle cx="590" cy="285" r="165" fill="var(--c-2-soft)" stroke="var(--c-2)" stroke-width="2" />
   <g clip-path="url(#fw-clip-ai)">
-    <circle cx="565" cy="256" r="140" fill="var(--surface-3)" stroke="var(--c-2)" stroke-width="2" />
+    <circle cx="590" cy="285" r="165" fill="var(--surface-3)" stroke="var(--c-2)" stroke-width="2" />
   </g>
 
-  <text x="318" y="234" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Artificial</text>
-  <text x="318" y="254" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Intelligence</text>
-  <text x="318" y="278" font-size="12" text-anchor="middle" fill="var(--text-secondary)">agentic AI · LLMs</text>
-  <text x="318" y="295" font-size="12" text-anchor="middle" fill="var(--text-secondary)">retrieval · model safety</text>
+  <text x="315" y="263" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Artificial</text>
+  <text x="315" y="283" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Intelligence</text>
+  <text x="315" y="307" font-size="12" text-anchor="middle" fill="var(--text-secondary)">agentic AI · LLMs</text>
+  <text x="315" y="324" font-size="12" text-anchor="middle" fill="var(--text-secondary)">retrieval · model safety</text>
 
-  <text x="644" y="234" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">High-Performance</text>
-  <text x="644" y="254" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Computing</text>
-  <text x="644" y="278" font-size="12" text-anchor="middle" fill="var(--text-secondary)">GPUs · scheduling</text>
-  <text x="644" y="295" font-size="12" text-anchor="middle" fill="var(--text-secondary)">telemetry · power</text>
+  <text x="645" y="263" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">High-Performance</text>
+  <text x="645" y="283" font-size="16" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Computing</text>
+  <text x="645" y="307" font-size="12" text-anchor="middle" fill="var(--text-secondary)">GPUs · scheduling</text>
+  <text x="645" y="324" font-size="12" text-anchor="middle" fill="var(--text-secondary)">telemetry · power</text>
 
-  <text x="480" y="224" font-size="14" font-weight="700" text-anchor="middle" fill="var(--text-primary)">ASPIRE</text>
-  <text x="480" y="246" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">efficient</text>
-  <text x="480" y="262" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">inference,</text>
-  <text x="480" y="278" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">optimization,</text>
-  <text x="480" y="294" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">deployment</text>
+  <text x="480" y="253" font-size="14" font-weight="700" text-anchor="middle" fill="var(--text-primary)">ASPIRE</text>
+  <text x="480" y="275" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">efficient</text>
+  <text x="480" y="291" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">inference,</text>
+  <text x="480" y="307" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">optimization,</text>
+  <text x="480" y="323" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">deployment</text>
 
-  <path d="M480 400 L480 416" stroke="var(--axis)" stroke-width="2" marker-end="url(#fw-arrow)" />
+  <path d="M480 454 L480 470" stroke="var(--axis)" stroke-width="2" marker-end="url(#fw-arrow)" />
 
   <!-- Band 3: three thrusts -->
   {order.map((key, i) => {
@@ -113,12 +113,12 @@ const drivers = [
     );
   })}
 
-  <path d="M480 598 L480 614" stroke="var(--axis)" stroke-width="2" marker-end="url(#fw-arrow)" />
+  <path d="M480 652 L480 668" stroke="var(--axis)" stroke-width="2" marker-end="url(#fw-arrow)" />
 
   <!-- Band 4: outcomes -->
-  <rect x="20" y="620" width="920" height="52" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
-  <text x="36" y="642" font-size="12" font-weight="700" letter-spacing="1.2" fill="var(--text-muted)">OUTCOMES</text>
-  <text x="36" y="660" font-size="13" fill="var(--text-secondary)">
+  <rect x="20" y="674" width="920" height="52" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
+  <text x="36" y="696" font-size="12" font-weight="700" letter-spacing="1.2" fill="var(--text-muted)">OUTCOMES</text>
+  <text x="36" y="714" font-size="13" fill="var(--text-secondary)">
     Research skills and computing identity · reproducible artifacts, reports and posters · graduate-school pathways · an AI-ready workforce
   </text>
 </svg>
