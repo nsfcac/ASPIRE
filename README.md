@@ -72,6 +72,5 @@ SITE=https://aspire.example.edu BASE_PATH=/ npm run build
 
 ## Notes
 
-- `NSF_Proposal_REU_2026.pdf` is intentionally excluded from version control via `.gitignore`.
-- Recruitment pages describe the intended application process; ETAP links and program dates should
+- Recruitment pages describe the intended application process; ETAP links and program dates will
   be added once the award and dates are known.
