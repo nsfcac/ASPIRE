@@ -10,8 +10,6 @@ export const site = {
   cohortSize: 10,
   contactNote:
     'Applications will be received and managed through the NSF Education and Training Application (ETAP) system.',
-  proposalNote:
-    'This site summarizes a proposal submitted to the NSF Research Experiences for Undergraduates (REU) Sites program. It is a navigational companion to the proposal document, not a substitute for it.',
 };
 
 export const nav = [

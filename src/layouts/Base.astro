@@ -79,7 +79,6 @@ const pageTitle = title === site.acronym ? `${site.acronym} — NSF REU Site` : 
         <p style="margin-bottom:.6rem">
           <strong style="color:var(--text-secondary)">{site.shortTitle}</strong> — {site.institution}, {site.college}.
         </p>
-        <p>{site.proposalNote}</p>
         <p style="margin-bottom:0">
           Pages: {nav.map((n, i) => (
             <Fragment>{i === 0 ? '' : ' · '}<a href={link(n.href)}>{n.label}</a></Fragment>
