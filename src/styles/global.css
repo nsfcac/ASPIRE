@@ -164,7 +164,7 @@ li { margin-bottom: 0.35em; }
 
 /* ---------- layout ---------- */
 .wrap { width: min(var(--maxw), 100% - 2.5rem); margin-inline: auto; }
-.narrow { width: min(58rem, 100%); }
+.narrow { width: 100%; }
 .section { padding: 3rem 0; }
 .stack > * + * { margin-top: 1rem; }
 
@@ -222,7 +222,7 @@ nav.main a[aria-current="page"] { color: var(--brand); background: var(--brand-s
   font-size: 0.72rem; letter-spacing: 0.11em; text-transform: uppercase;
   font-weight: 700; color: var(--brand); margin-bottom: 0.5rem;
 }
-.lede { font-size: 1.12rem; color: var(--text-secondary); max-width: 52em; }
+.lede { font-size: 1.12rem; color: var(--text-secondary); }
 
 .card {
   background: var(--surface-1);
