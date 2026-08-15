@@ -172,6 +172,10 @@ li { margin-bottom: 0.35em; }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+/* Exactly three columns on desktop, regardless of how many cards follow. */
+.grid-3-fixed { grid-template-columns: 1fr; }
+@media (min-width: 42rem) { .grid-3-fixed { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 62rem) { .grid-3-fixed { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* ---------- header / nav ---------- */
 .site-header {
