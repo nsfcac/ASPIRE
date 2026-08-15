@@ -1,0 +1,69 @@
+---
+import { projects, thrusts, thrustOf } from '../../data/projects';
+
+const labelW = 330;
+const x0 = labelW + 10;
+const cellW = 60;
+const rowH = 34;
+const top = 46;
+const height = top + projects.length * rowH + 34;
+const ordinal = ['var(--ord-1)', 'var(--ord-2)', 'var(--ord-3)', 'var(--ord-4)'];
+const ink = ['#0b1c30', '#ffffff', '#ffffff', '#ffffff'];
+const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
+---
+
+<svg viewBox={`0 0 960 ${height}`} role="img" aria-labelledby="pm-title pm-desc" class="phasemap-fig">
+  <title id="pm-title">Research phases of the nine REU projects across ten weeks</title>
+  <desc id="pm-desc">
+    Each of the nine projects is shown as a row of phase bars over ten weeks. Eight projects use a
+    three-phase arc — weeks 1 to 3, 4 to 7, and 8 to 10. Project 7 uses four shorter phases. Every project
+    ends with validation, reporting and presentation in weeks 8 to 10.
+  </desc>
+
+  {Array.from({ length: 10 }, (_, i) => (
+    <g>
+      <rect x={x0 + i * cellW} y="10" width={cellW - 4} height="24" rx="5" fill="var(--surface-2)" />
+      <text x={x0 + i * cellW + (cellW - 4) / 2} y="27" font-size="11.5" font-weight="700" text-anchor="middle" fill="var(--text-secondary)">W{i + 1}</text>
+    </g>
+  ))}
+
+  {projects.map((p, i) => {
+    const t = thrusts[thrustOf(p.id)];
+    const y = top + i * rowH;
+    return (
+      <g>
+        {i % 2 === 1 && <rect x="0" y={y - 2} width="960" height={rowH - 2} fill="var(--surface-2)" opacity="0.55" />}
+        <rect x="0" y={y + 4} width="4" height="20" rx="2" fill={t.color} />
+        <text x="14" y={y + 14} font-size="11.5" font-weight="700" fill="var(--text-primary)">Project {p.id}</text>
+        <text x="72" y={y + 14} font-size="11.5" fill="var(--text-secondary)">{clip(p.title, 40)}</text>
+        <text x="14" y={y + 27} font-size="10.5" fill="var(--text-muted)">{t.name} · {p.mentors.join(', ')}</text>
+
+        {p.phases.map((ph, j) => {
+          const x = x0 + (ph.weekStart - 1) * cellW;
+          const w = (ph.weekEnd - ph.weekStart + 1) * cellW - 5;
+          return (
+            <g>
+              <rect x={x} y={y + 3} width={w} height="22" rx="4" fill={ordinal[j]} />
+              <text x={x + w / 2} y={y + 18} font-size="10.5" font-weight="600" text-anchor="middle" fill={ink[j]}>
+                {w > 92 ? clip(ph.title, Math.floor(w / 6.1)) : ph.label.replace('Phase ', 'P')}
+              </text>
+            </g>
+          );
+        })}
+      </g>
+    );
+  })}
+
+  <g transform={`translate(0, ${top + projects.length * rowH + 12})`}>
+    {['Phase 1', 'Phase 2', 'Phase 3', 'Phase 4 (Project 7 only)'].map((lbl, i) => (
+      <g transform={`translate(${i * 190}, 0)`}>
+        <rect x="0" y="0" width="14" height="14" rx="3" fill={ordinal[i]} />
+        <text x="20" y="11.5" font-size="11.5" fill="var(--text-secondary)">{lbl}</text>
+      </g>
+    ))}
+  </g>
+</svg>
+
+<style>
+  .phasemap-fig { min-width: 880px; }
+</style>

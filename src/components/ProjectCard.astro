@@ -1,0 +1,32 @@
+---
+import { thrusts, thrustOf, type Project } from '../data/projects';
+
+interface Props { project: Project; }
+const { project } = Astro.props;
+const t = thrusts[thrustOf(project.id)];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<a class="card card-link project-card" href={`${base}/projects/${project.slug}`}>
+  <div class="head">
+    <span class="pid" style={`background:${t.color}`}>P{project.id}</span>
+    <span class="tag"><span class="dot" style={`background:${t.color}`}></span>{t.name}</span>
+  </div>
+  <h3>{project.title}</h3>
+  <p class="short">{project.short}</p>
+  <p class="meta">{project.mentors.join(' · ')}</p>
+  <p class="more">Read the project plan →</p>
+</a>
+
+<style>
+  .project-card { display: flex; flex-direction: column; height: 100%; }
+  .head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+  .pid {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
+    color: var(--surface-0); padding: 0.15rem 0.45rem; border-radius: 4px;
+  }
+  .project-card h3 { font-size: 1.05rem; margin: 0 0 0.4rem; }
+  .short { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 0.7rem; }
+  .meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+  .more { font-size: 0.82rem; font-weight: 600; color: var(--brand); margin: auto 0 0; }
+</style>

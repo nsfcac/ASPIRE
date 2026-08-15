@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import TimelineFigure from '../components/figures/TimelineFigure.astro';
+import { timetable, activityKindLabels } from '../data/team';
+---
+
+<Base
+  title="Program & Timeline"
+  eyebrow="Planned Activities and Professional Development"
+  section="(a), (e)"
+  lede="Ten weeks that move students from orientation and structured training to independent research decisions and a public symposium."
+  description="The ten-week ASPIRE REU schedule, full activity timetable, and student and mentor professional development."
+>
+  <div class="wrap section">
+    <Figure
+      number="2"
+      title="The ten-week program at a glance."
+      caption="Cells carry the activity codes used in the timetable below. The research band shows the arc a typical project follows; cohort activities are distributed so that training front-loads the summer and dissemination concentrates at the end."
+    >
+      <TimelineFigure />
+    </Figure>
+
+    <h2 id="timetable">Timetable of planned activities</h2>
+    <p class="narrow">
+      Every activity in the proposal's Table 1 appears below. Activity codes (A1.1, A2.3, …) match the
+      codes shown in Figure 2.
+    </p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th style="width:4rem">Week</th><th style="width:5rem">Code</th><th style="width:16rem">Activity</th><th>Description</th><th style="width:9rem">Type</th></tr>
+        </thead>
+        <tbody>
+          {timetable.map((w) =>
+            w.activities.map((a, i) => (
+              <tr>
+                {i === 0 ? <td rowspan={w.activities.length} style="font-weight:700;background:var(--surface-2)">W{w.week}</td> : null}
+                <td style="font-family:var(--font-mono);font-size:.82rem;color:var(--text-muted)">{a.code}</td>
+                <td><b>{a.name}</b></td>
+                <td style="color:var(--text-secondary)">{a.description}</td>
+                <td style="font-size:.82rem;color:var(--text-muted)">{activityKindLabels[a.kind]}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="student-dev">Student professional development</h2>
+    <p class="narrow">
+      Seminars and hands-on workshops strengthen students' research, professional, and career development.
+    </p>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-top:0">Responsible conduct of research</h3>
+        <p>
+          Research methods, responsible conduct of research, research integrity, authorship, plagiarism,
+          data management, reproducibility, privacy, conflicts of interest, and responsible AI use.
+        </p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Graduate school preparation</h3>
+        <p>
+          Dr. Justin Shaffer (Colorado School of Mines) discusses undergraduate research, graduate school
+          preparation, and the CRA UR2PhD program. A dedicated seminar in Week 8 covers applications,
+          finding research advisers, funding, and succeeding in graduate school.
+        </p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Research communication</h3>
+        <p>
+          Students develop research and professional communication skills, poster and oral presentations,
+          resume preparation, and graduate school applications — culminating in a full-day public
+          symposium with oral and poster presentations in Week 10.
+        </p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Innovation and well-being</h3>
+        <p>
+          A visit to the Texas Tech Innovation Hub introduces the NSF I-Corps program and how research
+          ideas become products, services, and startups. Students are also introduced to recreational,
+          wellness, and community-building opportunities through the TTU Recreation Center.
+        </p>
+      </div>
+    </div>
+
+    <h2 id="mentor-dev">Mentor professional development</h2>
+    <p class="narrow">
+      Research mentors are selected for their research expertise, mentoring experience, and commitment to
+      undergraduate education. Before the program begins, mentors participate in an orientation on
+      inclusive mentoring, effective communication, project scoping, goal setting, constructive feedback,
+      and supporting students' academic and professional growth. Dr. Nancy E. McIntyre, Director of TTU's
+      President's STEM Mentoring Academy, leads a seminar on effective STEM undergraduate mentoring and
+      provides resources for building productive mentor–mentee relationships. Mentors establish weekly
+      goals, meet regularly with students, and provide timely and actionable feedback; student feedback and
+      mid-summer evaluations give opportunities to strengthen mentoring throughout the program.
+    </p>
+
+    <h2 id="expectations">Expectations of behavior</h2>
+    <div class="callout">
+      <p style="margin-bottom:.6rem">
+        All REU participants and personnel attend a required orientation establishing shared expectations
+        for a safe, respectful, inclusive, and harassment-free research community. The orientation reviews
+        applicable NSF and Texas Tech University policies on discrimination, harassment, sexual misconduct,
+        and research misconduct, and TTU employees involved in the program complete required institutional
+        training.
+      </p>
+      <p style="margin-bottom:0">
+        Participants receive clear information about available resources, reporting options, and procedures
+        for raising concerns. <b>A dedicated email address accessible only to the PI and Co-PI</b> provides
+        an additional channel for participants to communicate questions or concerns. These expectations
+        apply to all in-person and online REU activities.
+      </p>
+    </div>
+  </div>
+</Base>

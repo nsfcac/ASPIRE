@@ -1,0 +1,50 @@
+---
+import { rubric } from '../../data/team';
+
+const labelW = 236;
+const x0 = labelW + 12;
+const plotW = 560;
+const max = 30; // axis maximum, so 25% does not touch the frame
+const rowH = 44;
+const top = 40;
+const height = top + rubric.length * rowH + 26;
+const scale = (v: number) => (v / max) * plotW;
+const ticks = [0, 10, 20, 30];
+---
+
+<svg viewBox={`0 0 880 ${height}`} role="img" aria-labelledby="rb-title rb-desc" class="rubric-fig">
+  <title id="rb-title">Weight of each application review criterion</title>
+  <desc id="rb-desc">
+    Research potential carries the largest weight at 25 percent. Academic preparation, research motivation
+    and project fit each carry 20 percent, and growth and contribution carries 15 percent.
+  </desc>
+
+  {ticks.map((t) => (
+    <g>
+      <line x1={x0 + scale(t)} y1={top - 12} x2={x0 + scale(t)} y2={top + rubric.length * rowH - 12} stroke="var(--grid)" stroke-width="1" />
+      <text x={x0 + scale(t)} y={top - 20} font-size="11" text-anchor="middle" fill="var(--text-muted)">{t}%</text>
+    </g>
+  ))}
+
+  {rubric.map((r, i) => {
+    const y = top + i * rowH;
+    const w = scale(r.weight);
+    return (
+      <g>
+        <text x={labelW} y={y + 14} font-size="12.5" font-weight="600" text-anchor="end" fill="var(--text-primary)">{r.criterion}</text>
+        <text x={labelW} y={y + 30} font-size="11" text-anchor="end" fill="var(--text-muted)">{r.evidence}</text>
+        <rect x={x0} y={y + 2} width={w} height="22" rx="4" fill={r.weight === 25 ? 'var(--ord-3)' : 'var(--ord-2)'} />
+        <text x={x0 + w + 10} y={y + 18} font-size="12.5" font-weight="700" fill="var(--text-primary)">{r.weight}%</text>
+      </g>
+    );
+  })}
+
+  <line x1={x0} y1={top + rubric.length * rowH - 12} x2={x0 + plotW} y2={top + rubric.length * rowH - 12} stroke="var(--axis)" stroke-width="1" />
+  <text x={x0} y={top + rubric.length * rowH + 8} font-size="11" fill="var(--text-muted)">
+    Weights sum to 100%. Each application is scored against a “meets” and an “exceeds” descriptor for every criterion.
+  </text>
+</svg>
+
+<style>
+  .rubric-fig { min-width: 620px; }
+</style>

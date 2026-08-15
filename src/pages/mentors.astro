@@ -1,0 +1,107 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import MentorMapFigure from '../components/figures/MentorMapFigure.astro';
+import { mentors } from '../data/team';
+import { projects, thrusts, thrustOf } from '../data/projects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  title="Research Mentors"
+  eyebrow="Research Mentors"
+  section="(c)"
+  lede="Five mentors spanning high-performance computing, artificial intelligence, natural language processing, cybersecurity, and software engineering — at different career stages and with established undergraduate mentoring records."
+  description="The ASPIRE REU research mentors, their expertise, and their undergraduate mentoring experience."
+>
+  <div class="wrap section">
+    <p class="narrow">
+      The mentors represent diverse research expertise, career stages, academic backgrounds, and mentoring
+      experiences, giving students opportunities to learn different research methods, explore a range of
+      research problems, and encounter multiple scientific perspectives.
+    </p>
+
+    <Figure
+      number="5"
+      title="Mentor–project map."
+      caption="Dr. Chen and Dr. Li co-mentor the four systems-oriented projects, giving students in those projects two supervisors; Dr. Amjad, Dr. Mengel, and Dr. Salman each lead the projects in their own areas."
+    >
+      <MentorMapFigure />
+    </Figure>
+
+    {mentors.map((m) => (
+      <section class="mentor-block">
+        <div class="who">
+          <h2 style="margin-top:0">{m.name}</h2>
+          <p class="role">{m.role}</p>
+          <p class="pos">{m.position}</p>
+          {m.lead && <p class="lead-note">{m.lead}</p>}
+        </div>
+        <div class="detail">
+          <h4>Research expertise</h4>
+          <div class="tag-row">{m.expertise.map((e) => <span class="tag">{e}</span>)}</div>
+          <h4>Undergraduate mentoring experience</h4>
+          <p>{m.mentoring}</p>
+          <h4>Projects in this Site</h4>
+          <ul class="proj-list">
+            {m.projects.map((pid) => {
+              const p = projects.find((pp) => pp.id === pid)!;
+              const t = thrusts[thrustOf(pid)];
+              return (
+                <li>
+                  <span class="dot" style={`background:${t.color}`}></span>
+                  <a href={`${base}/projects/${p.slug}`}><b>Project {p.id}.</b> {p.title}</a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    ))}
+
+    <h2>Mentoring capacity at a glance</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Mentor</th><th>Position</th><th>Expertise</th><th class="num">Projects offered</th></tr></thead>
+        <tbody>
+          {mentors.map((m) => (
+            <tr>
+              <td><b>{m.name}</b><br /><span style="font-size:.82rem;color:var(--text-muted)">{m.role}</span></td>
+              <td style="font-size:.87rem">{m.position}</td>
+              <td style="font-size:.85rem;color:var(--text-secondary)">{m.expertise.join(' · ')}</td>
+              <td class="num">{m.projects.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:2rem">
+      <b>External evaluation.</b> The program is independently evaluated by an external evaluator from the
+      Computing Research Association, working with the CRA Center for Evaluating the Research Pipeline
+      (CERP). <a href={`${base}/evaluation`}>See the evaluation plan →</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .mentor-block {
+    display: grid; gap: 1.5rem; padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 56rem) { .mentor-block { grid-template-columns: 19rem minmax(0, 1fr); } }
+  .mentor-block h2 { font-size: 1.35rem; margin-bottom: 0.25rem; }
+  .role { font-weight: 650; color: var(--brand); font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .pos { font-size: 0.88rem; color: var(--text-muted); }
+  .lead-note { font-size: 0.88rem; color: var(--text-secondary); border-left: 3px solid var(--border-strong); padding-left: 0.7rem; margin-top: 0.9rem; }
+  .detail h4 { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-top: 1.25rem; }
+  .detail h4:first-child { margin-top: 0; }
+  .detail p { color: var(--text-secondary); font-size: 0.95rem; }
+  ul.proj-list { list-style: none; padding: 0; margin: 0; }
+  ul.proj-list li { display: flex; align-items: baseline; gap: 0.55rem; font-size: 0.92rem; }
+  ul.proj-list .dot { width: 0.55rem; height: 0.55rem; border-radius: 999px; flex: none; }
+  ul.proj-list a { color: var(--text-secondary); text-decoration: none; }
+  ul.proj-list a:hover { color: var(--brand); }
+</style>

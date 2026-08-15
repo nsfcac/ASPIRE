@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import PhaseMapFigure from '../components/figures/PhaseMapFigure.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects, thrusts } from '../data/projects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base
+  title="Research Projects"
+  eyebrow="Nature of Student Activities"
+  section="(b)"
+  lede="Nine faculty-mentored projects at the intersection of AI and HPC. Each guides students from learning relevant concepts and tools, through experiments and analysis, to an open research question."
+  description="The nine ASPIRE REU research projects, their objectives, significance, and week-by-week research plans."
+>
+  <div class="wrap section">
+    <p class="narrow">
+      Students work closely with faculty mentors and graduate researchers through regular meetings, while
+      cohort activities support collaboration and the exchange of ideas across projects. As students build
+      research skills, knowledge, and confidence, they take greater ownership of their research decisions,
+      their interpretation of results, and the communication of findings. Every project ends with a
+      technical report and an oral or poster presentation.
+    </p>
+
+    <Figure
+      number="3"
+      title="Research phases across the ten weeks."
+      caption="Eight of the nine projects share a three-phase arc — training and baselines (weeks 1–3), focused investigation (weeks 4–7), and validation and communication (weeks 8–10). Project 7 subdivides the same arc into four shorter phases."
+    >
+      <PhaseMapFigure />
+    </Figure>
+
+    <h2>Common design principles</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h4 style="margin-top:0">Low barrier to entry</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          Projects supply prepared applications, starter code, sample datasets, and software environments.
+          Most explicitly require no prior HPC or GPU programming experience.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Progressive ownership</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          Phase 1 is scaffolded training and reproduction; by Phase 2 students select research questions,
+          features, and metrics; by Phase 3 they defend limitations and communicate findings.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Real artifacts</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          Each project produces reusable outputs — datasets, notebooks, prototypes, evaluation suites, and
+          open-source code — that later cohorts and the wider community can build on.
+        </p>
+      </div>
+    </div>
+
+    {(Object.keys(thrusts) as (keyof typeof thrusts)[]).map((k) => {
+      const t = thrusts[k];
+      return (
+        <section>
+          <h2 id={k} style={`border-left:4px solid ${t.color};padding-left:.7rem`}>{t.name}</h2>
+          <p class="narrow">{t.blurb}</p>
+          <div class="grid grid-2" style="margin-top:1.25rem">
+            {t.projects.map((pid) => (
+              <ProjectCard project={projects.find((p) => p.id === pid)!} />
+            ))}
+          </div>
+        </section>
+      );
+    })}
+
+    <h2>Project index</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Project</th><th>Mentors</th><th>Focus area</th><th>Core skills students build</th></tr>
+        </thead>
+        <tbody>
+          {projects.map((p) => (
+            <tr>
+              <td><b>{p.id}</b></td>
+              <td><a href={`${base}/projects/${p.slug}`}>{p.title}</a></td>
+              <td>{p.mentors.join(', ')}</td>
+              <td>{p.domain}</td>
+              <td style="font-size:.85rem;color:var(--text-secondary)">{p.skills.join(' · ')}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,216 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import FrameworkFigure from '../components/figures/FrameworkFigure.astro';
+import { site, nav } from '../data/site';
+import { thrusts, projects } from '../data/projects';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const link = (h: string) => `${base}${h}`;
+---
+
+<Base
+  title={site.acronym}
+  description="NSF REU Site proposal at Texas Tech University: ten weeks of mentored undergraduate research at the intersection of AI and high-performance computing."
+>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">NSF REU Site Proposal · Texas Tech University</p>
+      <h1>ASPIRE</h1>
+      <p class="hero-sub">Advancing Scientific Discovery through High-Performance Computing and AI Research</p>
+      <p class="lede">
+        A ten-week Research Experience for Undergraduates that engages students in ongoing research
+        developing and applying <b>AI and HPC methods</b> to scientifically challenging and socially
+        important problems — across healthcare, cybersecurity, natural language processing, software
+        engineering, and computing systems.
+      </p>
+
+      <div class="stat-row" style="margin-top:2rem">
+        <div class="stat"><div class="num">10</div><div class="lbl">students per summer cohort</div></div>
+        <div class="stat"><div class="num">10</div><div class="lbl">weeks of mentored research</div></div>
+        <div class="stat"><div class="num">9</div><div class="lbl">research projects offered</div></div>
+        <div class="stat"><div class="num">5</div><div class="lbl">research mentors</div></div>
+        <div class="stat"><div class="num">32</div><div class="lbl">NVIDIA H100 NVL GPUs on REPACSS</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap section">
+    <h2 id="objectives">Objectives</h2>
+    <p class="narrow">
+      This REU Site aims to <b>inspire, engage, and prepare undergraduate students</b> for research and
+      careers in Artificial Intelligence and High-Performance Computing. Students will join ongoing
+      faculty research, gain access to NSF-funded advanced computing resources, and explore pathways to
+      graduate education and research or engineering careers.
+    </p>
+
+    <Figure
+      number="1"
+      title="Program framework."
+      caption="National priorities motivate an intellectual core at the intersection of AI and HPC; that core is delivered through three research thrusts holding the nine REU projects, which lead to student and workforce outcomes."
+    >
+      <FrameworkFigure />
+    </Figure>
+
+    <h2 id="why">Why AI and HPC together</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>The computational challenge</h3>
+        <p>
+          The growing size and complexity of AI models create major computational challenges: high compute
+          and memory requirements, long training and inference times, high energy consumption, and
+          large-scale data processing. Addressing them requires advanced computing resources (GPUs and
+          NPUs) alongside parallel and distributed computing, model optimization, and efficient data
+          processing.
+        </p>
+      </div>
+      <div class="card">
+        <h3>The intellectual focus</h3>
+        <p>
+          AI is expanding beyond model development and training toward <b>agentic AI</b>, efficient
+          inference, and deployment across diverse computing platforms including edge and end-user
+          devices. These advances create new research opportunities in efficient inference, model
+          optimization, memory and energy efficiency, and heterogeneous computing — all of which need HPC
+          capabilities to develop, test, optimize, and deploy.
+        </p>
+      </div>
+      <div class="card">
+        <h3>The workforce need</h3>
+        <p>
+          STEM-related fields employ 25% of the U.S. workforce, yet skill gaps persist in emerging areas
+          such as AI. NSF's FY 2026–2030 Strategic Plan emphasizes developing the next generation of the
+          STEM workforce. ASPIRE contributes directly by giving undergraduates hands-on AI and HPC research
+          experience on research-scale infrastructure.
+        </p>
+      </div>
+      <div class="card">
+        <h3>What distinguishes this Site</h3>
+        <p>
+          Existing REU Sites have engaged students in HPC for engineering, in computational science and
+          emerging architectures, and in national cyberinfrastructure for societal problems. ASPIRE builds
+          on and complements these through a <b>focused integration of AI and HPC</b>: students learn both
+          AI methods and the advanced computing methods needed to develop, train, optimize, and deploy AI
+          systems efficiently and at scale.
+        </p>
+      </div>
+    </div>
+
+    <h2 id="thrusts">Three research thrusts, nine projects</h2>
+    <p class="narrow">
+      Every project follows the same arc — from learning relevant concepts and tools, to running
+      experiments and analyzing results, to addressing an open research question — while students take
+      progressively greater ownership of their research decisions.
+    </p>
+    <div class="grid grid-3">
+      {(Object.keys(thrusts) as (keyof typeof thrusts)[]).map((k) => {
+        const t = thrusts[k];
+        return (
+          <div class="card thrust-card" style={`--accent:${t.color}`}>
+            <div class="rule"></div>
+            <h3>{t.name}</h3>
+            <p style="font-size:.92rem;color:var(--text-secondary)">{t.blurb}</p>
+            <ul class="plain">
+              {t.projects.map((pid) => {
+                const p = projects.find((pp) => pp.id === pid)!;
+                return (
+                  <li>
+                    <a href={`${base}/projects/${p.slug}`}>
+                      <b>P{p.id}.</b> {p.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+    <p style="margin-top:1.25rem"><a href={link('/projects')}><b>See all nine projects and their week-by-week research plans →</b></a></p>
+
+    <h2 id="participants">Who the program is for</h2>
+    <p class="narrow">
+      The program invites undergraduate students nationwide, with particular emphasis on students from
+      institutions where access to research opportunities and advanced computing resources is limited.
+      <b>Prior research experience is not required.</b> Participants are selected on their applications,
+      academic preparation, research potential, project fit, and expected benefit from the program. The
+      project team's expertise and perspectives help students build knowledge, confidence, and research
+      experience; Dr. Mengel and Dr. Salman also serve as role models for women in computing.
+    </p>
+
+    <h2 id="organization">Organizational structure</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Person</th><th>Role in the Site</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Dr. Yong Chen</b> (PI)</td><td>Overall leadership; oversees all aspects of the REU Site; research mentor</td></tr>
+          <tr><td><b>Dr. Maaz Amjad</b> (Co-PI)</td><td>Coordinates program logistics and student recruitment; research mentor</td></tr>
+          <tr><td><b>Dr. Susan Mengel</b></td><td>Co-leads HPC training activities; research mentor</td></tr>
+          <tr><td><b>Dr. Jie Li</b></td><td>Co-leads HPC training activities; research mentor</td></tr>
+          <tr><td><b>Dr. Tara Salman</b></td><td>Research mentor</td></tr>
+          <tr><td><b>External evaluator</b></td><td>Independent evaluation by an evaluator from the Computing Research Association</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1rem"><a href={link('/mentors')}>Mentor expertise and mentoring records →</a></p>
+
+    <h2 id="commitment">Institutional commitment</h2>
+    <div class="grid grid-3">
+      <div class="card"><h4 style="margin-top:0">Texas Tech University</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">Support for affordable accommodation and meals during the summer research experience.</p></div>
+      <div class="card"><h4 style="margin-top:0">Whitacre College of Engineering</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">Space, a supportive research environment, and access to facilities and resources for students and mentors.</p></div>
+      <div class="card"><h4 style="margin-top:0">TTU Recreational Sports</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">Access to facilities and activities supporting physical activity, well-being, and social engagement.</p></div>
+    </div>
+
+    <h2 id="map">How to read this site</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Page</th><th>Proposal section</th><th>What you will find</th></tr></thead>
+        <tbody>
+          {nav.slice(1).map((n) => (
+            <tr>
+              <td><a href={link(n.href)}><b>{n.label}</b></a></td>
+              <td>{n.section}</td>
+              <td>
+                {n.href === '/projects' && 'All nine projects: objectives, significance, benefits to students, and week-by-week research plans.'}
+                {n.href === '/program' && 'The ten-week schedule, the full activity timetable, and student and mentor professional development.'}
+                {n.href === '/environment' && 'REPACSS, host institution, laboratory facilities, and post-program mentoring.'}
+                {n.href === '/mentors' && 'The five research mentors, their expertise, and their undergraduate mentoring records.'}
+                {n.href === '/recruitment' && 'Eligibility, application materials, the selection rubric, and the national advertising plan.'}
+                {n.href === '/evaluation' && 'Formative and summative evaluation design, instruments, and the assessment schedule.'}
+                {n.href === '/impacts' && 'Broader impacts and results from prior NSF support.'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:2rem">
+      <b>Applications.</b> {site.contactNote} Applicants must meet NSF eligibility requirements and be a
+      second-year (sophomore) student or beyond by the start of the program.
+      <a href={link('/recruitment')}>See the full application process →</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero {
+    padding: 3.5rem 0 2.5rem;
+    background:
+      radial-gradient(60rem 22rem at 12% -10%, var(--brand-soft), transparent 70%),
+      var(--surface-1);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 { font-size: clamp(3rem, 2rem + 6vw, 5.2rem); letter-spacing: -0.03em; margin-bottom: 0.1em; }
+  .hero-sub {
+    font-family: var(--font-serif); font-size: clamp(1.15rem, 0.9rem + 1vw, 1.6rem);
+    color: var(--text-secondary); margin-bottom: 1.2rem; max-width: 40em;
+  }
+  .thrust-card .rule { height: 4px; width: 3rem; background: var(--accent); border-radius: 2px; margin-bottom: 0.9rem; }
+  .thrust-card h3 { margin-top: 0; font-size: 1.05rem; }
+  ul.plain { list-style: none; padding: 0; margin: 0.75rem 0 0; border-top: 1px solid var(--border); padding-top: 0.7rem; }
+  ul.plain li { font-size: 0.88rem; margin-bottom: 0.5rem; }
+  ul.plain a { color: var(--text-secondary); text-decoration: none; }
+  ul.plain a:hover { color: var(--brand); }
+</style>

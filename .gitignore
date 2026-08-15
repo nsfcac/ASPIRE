@@ -1,0 +1,6 @@
+NSF_Proposal_REU_2026.pdf
+node_modules/
+dist/
+.astro/
+.DS_Store
+npm-debug.log*

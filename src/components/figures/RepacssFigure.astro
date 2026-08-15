@@ -1,0 +1,96 @@
+---
+// REPACSS resources as described in the proposal:
+// 110 CPU nodes (256 AMD EPYC cores, 1.5 TB memory each) and 8 GPU nodes (32 NVIDIA H100 NVL GPUs total).
+const cpuCores = 110 * 256;
+const cpuMem = 110 * 1.5;
+---
+
+<svg viewBox="0 0 960 470" role="img" aria-labelledby="rp-title rp-desc" class="repacss-fig">
+  <title id="rp-title">How REU students reach and use the REPACSS cluster</title>
+  <desc id="rp-desc">
+    Students work from a dedicated workstation in their mentor's laboratory, connect over secure remote
+    access to REPACSS login nodes, and submit work through the Slurm scheduler to either a CPU partition of
+    110 nodes or a GPU partition of 8 nodes holding 32 NVIDIA H100 NVL GPUs. A monitoring plane collects
+    job, utilization, temperature and power data that several REU projects analyze directly.
+  </desc>
+
+  <defs>
+    <marker id="rp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--axis)" />
+    </marker>
+  </defs>
+
+  <!-- student side -->
+  <rect x="8" y="114" width="142" height="130" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
+  <text x="22" y="138" font-size="13" font-weight="700" fill="var(--text-primary)">REU student</text>
+  <text x="22" y="160" font-size="11" fill="var(--text-secondary)">Dedicated workspace</text>
+  <text x="22" y="176" font-size="11" fill="var(--text-secondary)">and computer in the</text>
+  <text x="22" y="192" font-size="11" fill="var(--text-secondary)">mentor’s lab, alongside</text>
+  <text x="22" y="208" font-size="11" fill="var(--text-secondary)">postdoctoral and</text>
+  <text x="22" y="224" font-size="11" fill="var(--text-secondary)">graduate researchers</text>
+
+  <path d="M156 179 L246 179" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
+  <text x="198" y="170" font-size="10.5" text-anchor="middle" fill="var(--text-muted)">secure</text>
+  <text x="198" y="196" font-size="10.5" text-anchor="middle" fill="var(--text-muted)">remote access</text>
+
+  <!-- cluster container -->
+  <rect x="250" y="30" width="702" height="330" rx="12" fill="none" stroke="var(--border-strong)" stroke-dasharray="5 4" />
+  <text x="268" y="52" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">REPACSS — TEXAS TECH ADVANCED HPC AND AI PLATFORM</text>
+
+  <!-- login + scheduler -->
+  <rect x="268" y="126" width="132" height="106" rx="10" fill="var(--surface-1)" stroke="var(--border)" />
+  <text x="334" y="152" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Login nodes</text>
+  <text x="334" y="172" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">Linux environment</text>
+  <text x="334" y="188" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">software modules</text>
+  <text x="334" y="212" font-size="11.5" text-anchor="middle" font-family="var(--font-mono)" fill="var(--text-muted)">Slurm sbatch</text>
+
+  <path d="M404 179 L444 179" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
+
+  <rect x="448" y="126" width="118" height="106" rx="10" fill="var(--surface-3)" stroke="var(--border-strong)" />
+  <text x="507" y="158" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Slurm</text>
+  <text x="507" y="176" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">scheduler</text>
+  <text x="507" y="198" font-size="11" text-anchor="middle" fill="var(--text-secondary)">queues, allocation,</text>
+  <text x="507" y="213" font-size="11" text-anchor="middle" fill="var(--text-secondary)">job accounting</text>
+
+  <path d="M570 160 L610 116" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
+  <path d="M570 200 L610 244" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
+
+  <!-- CPU partition -->
+  <rect x="614" y="56" width="322" height="106" rx="10" fill="var(--c-1-soft)" stroke="var(--c-1)" stroke-width="2" />
+  <text x="632" y="82" font-size="13.5" font-weight="700" fill="var(--text-primary)">CPU partition</text>
+  <text x="632" y="104" font-size="12" fill="var(--text-secondary)">110 compute nodes · 256 AMD EPYC cores/node</text>
+  <text x="632" y="122" font-size="12" fill="var(--text-secondary)">1.5 TB memory per node</text>
+  <text x="632" y="146" font-size="11.5" font-weight="600" fill="var(--text-muted)">≈ {cpuCores.toLocaleString()} cores · ≈ {cpuMem.toLocaleString()} TB aggregate memory</text>
+
+  <!-- GPU partition -->
+  <rect x="614" y="196" width="322" height="106" rx="10" fill="var(--c-2-soft)" stroke="var(--c-2)" stroke-width="2" />
+  <text x="632" y="222" font-size="13.5" font-weight="700" fill="var(--text-primary)">GPU partition</text>
+  <text x="632" y="244" font-size="12" fill="var(--text-secondary)">8 GPU nodes · 32 NVIDIA H100 NVL GPUs</text>
+  <text x="632" y="262" font-size="12" fill="var(--text-secondary)">model training, fine-tuning and inference</text>
+  <text x="632" y="286" font-size="11.5" font-weight="600" fill="var(--text-muted)">4 GPUs per node</text>
+
+  <!-- monitoring plane -->
+  <rect x="268" y="256" width="298" height="86" rx="10" fill="var(--surface-1)" stroke="var(--border)" />
+  <text x="286" y="280" font-size="13" font-weight="700" fill="var(--text-primary)">Monitoring &amp; power plane</text>
+  <text x="286" y="300" font-size="11.5" fill="var(--text-secondary)">node utilization · GPU activity · temperature</text>
+  <text x="286" y="316" font-size="11.5" fill="var(--text-secondary)">power draw · node state · Slurm job records</text>
+  <text x="286" y="332" font-size="11.5" fill="var(--text-secondary)">cooling and battery-backed energy supply</text>
+
+  <path d="M700 306 L700 322 L570 322" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#rp-arrow)" fill="none" />
+  <path d="M700 166 L590 166 L590 300 L570 300" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#rp-arrow)" fill="none" />
+
+  <!-- project usage band -->
+  <rect x="8" y="380" width="944" height="80" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
+  <text x="26" y="404" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">WHICH PROJECTS USE WHICH RESOURCE</text>
+  <text x="26" y="426" font-size="12" fill="var(--text-secondary)">
+    <tspan font-weight="700" fill="var(--text-primary)">Monitoring data:</tspan> Projects 1, 2 · <tspan font-weight="700" fill="var(--text-primary)">CPU vs. GPU experiments:</tspan> Project 3 ·
+    <tspan font-weight="700" fill="var(--text-primary)">Scheduler &amp; energy security:</tspan> Project 5
+  </text>
+  <text x="26" y="446" font-size="12" fill="var(--text-secondary)">
+    <tspan font-weight="700" fill="var(--text-primary)">GPU inference and fine-tuning:</tspan> Projects 6, 7, 8, 9 · <tspan font-weight="700" fill="var(--text-primary)">Documentation and user workflows:</tspan> Project 4
+  </text>
+</svg>
+
+<style>
+  .repacss-fig { min-width: 820px; }
+</style>

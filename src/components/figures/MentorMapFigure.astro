@@ -1,0 +1,90 @@
+---
+import { mentors } from '../../data/team';
+import { projects, thrusts, thrustOf } from '../../data/projects';
+
+const mBoxW = 244;
+const mBoxH = 62;
+const mX = 8;
+const mStep = 86;
+const mTop = 42;
+const mCY = (i: number) => mTop + i * mStep + mBoxH / 2;
+
+const pBoxW = 340;
+const pBoxH = 34;
+const pX = 560;
+const pStep = 46;
+const pTop = 30;
+const pCY = (i: number) => pTop + i * pStep + pBoxH / 2;
+
+const height = Math.max(mTop + mentors.length * mStep, pTop + projects.length * pStep) + 46;
+const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
+---
+
+<svg viewBox={`0 0 920 ${height}`} role="img" aria-labelledby="mm-title mm-desc" class="mentormap-fig">
+  <title id="mm-title">Which mentors supervise which projects</title>
+  <desc id="mm-desc">
+    Five research mentors connect to nine projects. Dr. Chen and Dr. Li co-mentor the four HPC systems and
+    AI-for-HPC projects; Dr. Amjad mentors the two applied AI systems projects; Dr. Mengel mentors the
+    energy security and GPU education projects; Dr. Salman mentors the prompt injection project.
+  </desc>
+
+  <text x="8" y="20" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">RESEARCH MENTORS</text>
+  <text x={pX} y="20" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">PROJECTS</text>
+
+  <!-- links first so nodes sit on top -->
+  {mentors.map((m, mi) =>
+    m.projects.map((pid) => {
+      const pi = projects.findIndex((p) => p.id === pid);
+      const t = thrusts[thrustOf(pid)];
+      const y1 = mCY(mi);
+      const y2 = pCY(pi);
+      const x1 = mX + mBoxW;
+      const x2 = pX;
+      const mid = (x1 + x2) / 2;
+      return (
+        <path
+          d={`M${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`}
+          fill="none"
+          stroke={t.color}
+          stroke-width="1.75"
+          opacity="0.65"
+        />
+      );
+    })
+  )}
+
+  {mentors.map((m, i) => (
+    <g>
+      <rect x={mX} y={mTop + i * mStep} width={mBoxW} height={mBoxH} rx="9" fill="var(--surface-1)" stroke="var(--border-strong)" />
+      <text x={mX + 14} y={mTop + i * mStep + 24} font-size="13" font-weight="700" fill="var(--text-primary)">{m.name}</text>
+      <text x={mX + 14} y={mTop + i * mStep + 41} font-size="11" fill="var(--text-muted)">{clip(m.role, 34)}</text>
+      <text x={mX + 14} y={mTop + i * mStep + 55} font-size="11" fill="var(--text-secondary)">{clip(m.expertise[0], 36)}</text>
+    </g>
+  ))}
+
+  {projects.map((p, i) => {
+    const t = thrusts[thrustOf(p.id)];
+    return (
+      <g>
+        <rect x={pX} y={pTop + i * pStep} width={pBoxW} height={pBoxH} rx="7" fill="var(--surface-1)" stroke="var(--border)" />
+        <rect x={pX} y={pTop + i * pStep} width="4" height={pBoxH} rx="2" fill={t.color} />
+        <text x={pX + 14} y={pTop + i * pStep + 15} font-size="11.5" font-weight="700" fill="var(--text-primary)">Project {p.id}</text>
+        <text x={pX + 70} y={pTop + i * pStep + 15} font-size="11.5" fill="var(--text-secondary)">{clip(p.title, 40)}</text>
+        <text x={pX + 14} y={pTop + i * pStep + 28} font-size="10.5" fill="var(--text-muted)">{t.name}</text>
+      </g>
+    );
+  })}
+
+  <g transform={`translate(8, ${height - 20})`}>
+    {(['systems', 'ai-systems', 'trust'] as const).map((k, i) => (
+      <g transform={`translate(${i * 250}, 0)`}>
+        <rect x="0" y="-10" width="14" height="14" rx="3" fill={thrusts[k].color} />
+        <text x="20" y="1.5" font-size="11.5" fill="var(--text-secondary)">{thrusts[k].name}</text>
+      </g>
+    ))}
+  </g>
+</svg>
+
+<style>
+  .mentormap-fig { min-width: 780px; }
+</style>

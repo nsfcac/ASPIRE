@@ -1,0 +1,17 @@
+{
+  "name": "aspire-reu-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for the NSF REU Site proposal: ASPIRE — Advancing Scientific Discovery through High-Performance Computing and AI Research (Texas Tech University)",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.6.1"
+  }
+}

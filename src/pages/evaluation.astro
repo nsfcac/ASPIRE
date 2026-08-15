@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import EvaluationFigure from '../components/figures/EvaluationFigure.astro';
+---
+
+<Base
+  title="Evaluation & Reporting"
+  eyebrow="Project Evaluation and Reporting"
+  section="(f)"
+  lede="Two purposes: ongoing feedback that improves the program while it runs, and evidence of whether the Site achieved its objectives — collected with validated instruments and an external evaluator."
+  description="The formative and summative evaluation plan for the ASPIRE REU Site, including instruments and assessment schedule."
+>
+  <div class="wrap section">
+    <p class="narrow">
+      The team collects quantitative and qualitative data through surveys, interviews, activity logs,
+      mentor–student meeting notes, and student research products. Evaluation uses locally developed
+      instruments together with the <b>Preflection, SURE III, and Follow-Up surveys</b> developed by
+      Dr. David Lopatto, and the <b>CRA CERP REU Evaluation Survey</b> to assess computing-specific outcomes
+      and support comparison with similar REU programs. After providing informed consent, students complete
+      one pre-summer, two mid-summer, and one post-summer survey, plus a 30-minute exit interview. Findings
+      are reviewed after each summer to strengthen subsequent activities and are summarized in annual and
+      final reports to NSF.
+    </p>
+
+    <Figure
+      number="8"
+      title="Evaluation logic model and assessment schedule."
+      caption="Formative points feed back into the running program; summative points measure whether the Site met its objectives. Follow-up continues for at least five years after participation."
+    >
+      <EvaluationFigure />
+    </Figure>
+
+    <h2 id="implementation">I. Evaluation of project activities and implementation</h2>
+    <p class="narrow">This strand examines how well program activities are implemented and identifies opportunities for continuous improvement.</p>
+    <div class="grid grid-3">
+      <div class="card">
+        <h4 style="margin-top:0">Activities and implementation</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          An activity log tracks recruitment, orientation, training, seminars, mentoring, presentations,
+          research outputs, and student progress. Projects are organized into weekly milestones beginning
+          with tutorials, reproducible examples, and validation tasks and progressing toward open-ended
+          research. Weekly meetings and mid-summer feedback keep project scope aligned with students'
+          progress, interests, and strengths.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Engagement and research progress</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          The team documents participation, engagement, milestone completion, and research outputs. Mentors
+          use this to provide individualized learning opportunities — tutorials, additional mentoring, peer
+          collaboration, or more advanced research tasks — based on each student's progress and interests.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Recruitment and selection</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          The team tracks applications, interviews, applicants' institutions and academic backgrounds,
+          participants recruited from outside TTU and from institutions with limited research
+          opportunities, and characteristics of the applicant pool. Recruitment data are reviewed annually
+          to strengthen outreach, application review, and student–project matching.
+        </p>
+      </div>
+    </div>
+
+    <h2 id="outcomes">II. Evaluation of impact on student learning outcomes</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h4 style="margin-top:0">Knowledge, skills, and confidence</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          Pre- and post-program surveys, meeting notes, and research products (posters, presentations,
+          manuscripts) assess growth in AI and HPC research: formulating research questions, working with
+          AI models and HPC technologies, conducting experiments, analyzing results, and communicating
+          findings.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Professional growth and future plans</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          CRA CERP and locally developed evaluations assess confidence in and interest toward graduate
+          education and awareness of computing research and career pathways. Exit interviews and open-ended
+          reflections identify which experiences contributed to growth and future plans.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Long-term outcomes</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          The team maintains contact through email, LinkedIn, and brief annual follow-up surveys for at
+          least five years, documenting continued participation in research, research outputs, graduate
+          education, and career pathways.
+        </p>
+      </div>
+    </div>
+
+    <h2 id="cerp">III. External evaluation with CRA CERP</h2>
+    <p class="narrow">
+      To measure project success qualitatively and quantitatively, the Site works with the Computing
+      Research Association's <b>Center for Evaluating the Research Pipeline (CERP)</b>, which conducts
+      evaluations of NSF CISE REUs. CERP runs longitudinal quantitative surveys across three time points:
+      a pre-test at the beginning of the REU, a post-test at the end, and a follow-up one year later.
+    </p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>What CERP measures</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><b>Self-perceptions</b></td><td>Self-efficacy; computing identity</td></tr>
+          <tr><td><b>Academic development</b></td><td>Research skill proficiency</td></tr>
+          <tr><td><b>Professional aspirations</b></td><td>Intentions to pursue graduate school; career goals</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="narrow" style="margin-top:1rem">
+      The REU PI is responsible for disseminating the pre-test and post-test surveys to students. Students
+      can opt in to provide contact information for the follow-up survey, which is sent to them directly.
+    </p>
+  </div>
+</Base>

@@ -1,0 +1,104 @@
+---
+const stages = [
+  {
+    label: 'Nationwide recruitment',
+    width: 400,
+    fill: 'var(--ord-1)',
+    ink: '#0b1c30',
+    detail: [
+      'TTU, college, department and NSF REU webpages; university social media',
+      'Departmental mailing lists; ACM student chapters; faculty professional networks',
+      'ACM-W, CRA-WP, IEEE WIE, SWE, NCWIT; conferences such as SIGCSE',
+      'TTU STEM CORE partner network and partner institutions',
+    ],
+  },
+  {
+    label: 'Applications via NSF ETAP',
+    width: 344,
+    fill: 'var(--ord-1)',
+    ink: '#0b1c30',
+    detail: [
+      'Resume · personal statement (≤ 500 words) · undergraduate transcript',
+      'Two faculty recommendations · checklist of completed or ongoing coursework',
+    ],
+  },
+  {
+    label: 'Eligibility screening',
+    width: 292,
+    fill: 'var(--ord-2)',
+    ink: '#ffffff',
+    detail: [
+      'NSF eligibility; sophomore standing or beyond at program start',
+      'Programming and data structures/algorithms coursework',
+      'AI, cybersecurity, OS, math or HPC coursework informs project assignment',
+      'Prior research experience is not required',
+    ],
+  },
+  {
+    label: 'Two independent review teams',
+    width: 240,
+    fill: 'var(--ord-2)',
+    ink: '#ffffff',
+    detail: [
+      'Each team = PI or Co-PI + two research mentors',
+      'Applications scored on the five-criterion rubric (see Figure 7)',
+    ],
+  },
+  {
+    label: 'Team review and ranking',
+    width: 188,
+    fill: 'var(--ord-3)',
+    ink: '#ffffff',
+    detail: ['Full project team reviews scores and produces a ranked list', 'If an offer is declined, the next ranked qualified applicant is invited'],
+  },
+  {
+    label: '10 participants',
+    width: 136,
+    fill: 'var(--ord-3)',
+    ink: '#ffffff',
+    detail: ['Selected on skills, interests, preparation, project fit and growth potential', 'Project matching, structured onboarding and mentor-guided support follow'],
+  },
+];
+
+const top = 34;
+const rowH = 74;
+const height = top + stages.length * rowH + 12;
+const cx = 214;
+---
+
+<svg viewBox={`0 0 960 ${height}`} role="img" aria-labelledby="pl-title pl-desc" class="pipeline-fig">
+  <title id="pl-title">Recruitment and selection pipeline</title>
+  <desc id="pl-desc">
+    Six stages narrow from nationwide recruitment, through applications submitted in NSF ETAP, eligibility
+    screening, review by two independent teams using a weighted rubric, whole-team ranking, to a cohort of
+    ten selected participants.
+  </desc>
+
+  <text x="12" y="18" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">SELECTION FUNNEL</text>
+  <text x="440" y="18" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">WHAT HAPPENS AT THIS STAGE</text>
+
+  {stages.map((s, i) => {
+    const y = top + i * rowH;
+    return (
+      <g>
+        <rect x={cx - s.width / 2} y={y} width={s.width} height="44" rx="6" fill={s.fill} />
+        <text x={cx} y={y + 28} font-size={s.width < 200 ? 12 : 13} font-weight="700" text-anchor="middle" fill={s.ink}>
+          {s.label}
+        </text>
+        {i < stages.length - 1 && (
+          <path d={`M${cx - 7} ${y + 48} L${cx + 7} ${y + 48} L${cx} ${y + 60} z`} fill="var(--axis)" />
+        )}
+        <line x1="432" y1={y - 6} x2="948" y2={y - 6} stroke="var(--grid)" stroke-width="1" />
+        {s.detail.map((d, j) => (
+          <text x="440" y={y + 14 + j * 16} font-size="11.5" fill="var(--text-secondary)">
+            <tspan fill="var(--axis)">•</tspan> {d.length > 80 ? d.slice(0, 79) + '…' : d}
+          </text>
+        ))}
+      </g>
+    );
+  })}
+</svg>
+
+<style>
+  .pipeline-fig { min-width: 860px; }
+</style>

@@ -1,0 +1,107 @@
+---
+const cols = [
+  {
+    head: 'Inputs',
+    items: ['5 research mentors', 'REPACSS + lab facilities', 'External evaluator (CRA)', 'Institutional support letters'],
+  },
+  {
+    head: 'Activities',
+    items: ['Mentored research projects', 'Training & methods seminars', 'Weekly mentor meetings', 'Professional development'],
+  },
+  {
+    head: 'Outputs',
+    items: ['Reports, posters, talks', 'Code, data, notebooks', 'Activity & milestone logs', 'Applicant / cohort records'],
+  },
+  {
+    head: 'Short-term outcomes',
+    items: ['AI + HPC research skills', 'Research self-efficacy', 'Computing identity', 'Interest in graduate study'],
+  },
+  {
+    head: 'Long-term outcomes',
+    items: ['Continued research', 'Publications & presentations', 'Graduate enrollment', 'AI-ready workforce entry'],
+  },
+];
+
+const points = [
+  { x: 70, label: 'Pre-summer', when: 'before Week 1', items: ['Preflection survey', 'CERP pre-test', 'Informed consent'], kind: 'formative' },
+  { x: 285, label: 'Mid-summer', when: 'Weeks 5–6', items: ['Two mid-summer surveys', 'CERP mid-program check', 'Mid-program review'], kind: 'formative' },
+  { x: 510, label: 'Post-summer', when: 'Week 10', items: ['SURE III survey', 'CERP post-test', '30-minute exit interview'], kind: 'summative' },
+  { x: 720, label: 'One year later', when: '+12 months', items: ['CERP follow-up survey', 'Lopatto follow-up survey'], kind: 'summative' },
+  { x: 890, label: 'Long term', when: 'up to 5 years', items: ['Annual follow-up', 'Career & degree tracking'], kind: 'summative' },
+];
+
+const colW = 176;
+const gap = 12;
+---
+
+<svg viewBox="0 0 960 480" role="img" aria-labelledby="ev-title ev-desc" class="eval-fig">
+  <title id="ev-title">Evaluation logic model and assessment schedule</title>
+  <desc id="ev-desc">
+    A logic model runs from inputs and activities through outputs to short-term and long-term student
+    outcomes. Below it, an assessment schedule marks five data-collection points: pre-summer, mid-summer,
+    post-summer, one year later, and annual follow-up for up to five years.
+  </desc>
+
+  <defs>
+    <marker id="ev-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--axis)" />
+    </marker>
+  </defs>
+
+  <text x="16" y="20" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">PROGRAM LOGIC MODEL</text>
+
+  {cols.map((c, i) => {
+    const x = 16 + i * (colW + gap);
+    return (
+      <g>
+        <rect x={x} y="32" width={colW} height="150" rx="10" fill={i > 2 ? 'var(--surface-2)' : 'var(--surface-1)'} stroke="var(--border)" />
+        <rect x={x} y="32" width={colW} height="3" rx="1.5" fill={i > 2 ? 'var(--ord-3)' : 'var(--ord-2)'} />
+        <text x={x + 14} y="56" font-size="13" font-weight="700" fill="var(--text-primary)">{c.head}</text>
+        {c.items.map((it, j) => (
+          <text x={x + 14} y={78 + j * 20} font-size="11.5" fill="var(--text-secondary)">
+            <tspan fill="var(--axis)">›</tspan> {it}
+          </text>
+        ))}
+        {i < cols.length - 1 && (
+          <path d={`M${x + colW + 1} 107 L${x + colW + gap - 2} 107`} stroke="var(--axis)" stroke-width="2" marker-end="url(#ev-arrow)" />
+        )}
+      </g>
+    );
+  })}
+
+  <text x="16" y="226" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">ASSESSMENT SCHEDULE</text>
+
+  <line x1="40" y1="262" x2="920" y2="262" stroke="var(--border-strong)" stroke-width="2" />
+  {points.map((p) => (
+    <g>
+      <circle cx={p.x} cy="262" r="6.5" fill={p.kind === 'formative' ? 'var(--ord-2)' : 'var(--ord-3)'} stroke="var(--surface-1)" stroke-width="2.5" />
+      <line x1={p.x} y1="270" x2={p.x} y2="286" stroke="var(--grid)" stroke-width="1.5" />
+      <text x={p.x} y="302" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--text-primary)">{p.label}</text>
+      <text x={p.x} y="318" font-size="11" text-anchor="middle" fill="var(--text-muted)">{p.when}</text>
+      {p.items.map((it, j) => (
+        <text x={p.x} y={340 + j * 17} font-size="11" text-anchor="middle" fill="var(--text-secondary)">{it}</text>
+      ))}
+    </g>
+  ))}
+
+  <g transform="translate(16, 402)">
+    <rect x="0" y="0" width="14" height="14" rx="3" fill="var(--ord-2)" />
+    <text x="20" y="11.5" font-size="11.5" fill="var(--text-secondary)">Formative — feedback that changes the program while it runs</text>
+    <g transform="translate(400, 0)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="var(--ord-3)" />
+      <text x="20" y="11.5" font-size="11.5" fill="var(--text-secondary)">Summative — evidence that the Site met its objectives</text>
+    </g>
+  </g>
+
+  <rect x="16" y="430" width="928" height="42" rx="8" fill="var(--surface-2)" stroke="var(--border)" />
+  <text x="30" y="448" font-size="11.5" fill="var(--text-secondary)">
+    Instruments: locally developed measures · Preflection, SURE III and Follow-Up surveys (Lopatto) · CRA CERP REU Evaluation Survey
+  </text>
+  <text x="30" y="464" font-size="11.5" fill="var(--text-secondary)">
+    Independent evaluation by an external evaluator from the Computing Research Association; findings reported annually to NSF.
+  </text>
+</svg>
+
+<style>
+  .eval-fig { min-width: 880px; }
+</style>

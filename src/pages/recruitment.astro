@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import PipelineFigure from '../components/figures/PipelineFigure.astro';
+import RubricFigure from '../components/figures/RubricFigure.astro';
+import { rubric } from '../data/team';
+---
+
+<Base
+  title="Recruitment & Selection"
+  eyebrow="Student Recruitment and Selection"
+  section="(d)"
+  lede="A nationwide search managed through NSF ETAP, with a weighted rubric applied by two independent review teams — designed so that students without prior research experience can compete on demonstrated strengths and potential."
+  description="How ASPIRE recruits, screens, and selects its ten-student REU cohort each summer."
+>
+  <div class="wrap section">
+    <Figure
+      number="6"
+      title="Recruitment and selection pipeline."
+      caption="Recruitment deliberately reaches beyond Texas Tech — through national networks, partner institutions, and organizations supporting women in computing — before applications enter a common, rubric-scored review."
+    >
+      <PipelineFigure />
+    </Figure>
+
+    <h2 id="eligibility">Eligibility and application materials</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-top:0">Who may apply</h3>
+        <ul style="margin-bottom:0">
+          <li>Applicants must meet NSF eligibility requirements.</li>
+          <li>Must be an undergraduate student — second-year (sophomore) or beyond — by the start of the program.</li>
+          <li>Should have completed coursework in programming and data structures/algorithms.</li>
+          <li><b>Prior research experience is not required.</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">What to submit (via NSF ETAP)</h3>
+        <ul style="margin-bottom:0">
+          <li>Resume</li>
+          <li>Personal statement of no more than 500 words</li>
+          <li>Undergraduate transcript</li>
+          <li>Two faculty recommendations</li>
+          <li>Checklist of relevant completed or ongoing coursework</li>
+        </ul>
+      </div>
+    </div>
+    <p class="narrow" style="margin-top:1.25rem">
+      Coursework in areas such as AI, cybersecurity, operating systems, mathematics, or HPC is also
+      considered — not as a gate, but to inform project assignments and support meaningful engagement
+      across the Site's research projects. The review process recognizes multiple forms of preparation and
+      evaluates applicants on demonstrated strengths, motivation, research potential, project fit, and
+      opportunities for growth and contribution.
+    </p>
+
+    <h2 id="rubric">Selection criteria</h2>
+    <Figure
+      number="7"
+      title="Weight of each review criterion."
+      caption="Research potential carries the greatest weight (25%), reflecting the Site's emphasis on growth over prior credentials; academic preparation, research motivation, and project fit each carry 20%, and growth and contribution 15%."
+    >
+      <RubricFigure />
+    </Figure>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Criterion</th><th>Evidence</th><th>Meets expectations</th><th>Exceeds expectations</th><th class="num">Weight</th></tr>
+        </thead>
+        <tbody>
+          {rubric.map((r) => (
+            <tr>
+              <td><b>{r.criterion}</b></td>
+              <td style="font-size:.85rem;color:var(--text-muted)">{r.evidence}</td>
+              <td style="color:var(--text-secondary)">{r.meets}</td>
+              <td style="color:var(--text-secondary)">{r.exceeds}</td>
+              <td class="num"><b>{r.weight}%</b></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="review">Review process</h2>
+    <p class="narrow">
+      Applications meeting the eligibility requirements are evaluated using the rubric above. <b>Two review
+      teams</b> distribute the application-review workload and support an efficient and consistent selection
+      process; each team consists of either the PI or Co-PI plus two research mentors and independently
+      evaluates its assigned applications. The project team then reviews and ranks applicants, and the
+      <b>top 10 highest-ranked participants</b> are selected on skills, research interests, preparation,
+      project alignment, and potential for research growth. If a selected applicant declines or is unable to
+      participate, the next highly ranked qualified applicant is invited.
+    </p>
+    <p class="narrow">
+      To ensure that all students can comprehend the research materials and engage effectively in their
+      projects, the team uses <b>project matching, structured onboarding, and mentor-guided support</b> to
+      build on students' prior knowledge and strengthen the skills needed for successful participation.
+    </p>
+
+    <h2 id="advertising">How the Site is advertised</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h4 style="margin-top:0">Institutional channels</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          TTU, college, department, and NSF REU webpages; university social media (Facebook, Instagram);
+          departmental mailing lists; ACM student chapters. A REU Site website with project descriptions,
+          eligibility information, application instructions, and student resources is already in place.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Professional networks</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          Networks supporting women in computing — Women in Computing, ACM-W, CRA-WP, IEEE Women in
+          Engineering, SWE, and NCWIT — plus academic conferences and student research events such as
+          SIGCSE and related student research competitions.
+        </p>
+      </div>
+      <div class="card">
+        <h4 style="margin-top:0">Partner outreach</h4>
+        <p style="font-size:.92rem;color:var(--text-secondary);margin:0">
+          TTU's STEM Center for Outreach, Research &amp; Education (STEM CORE) connects the program with
+          institutions nationwide through its partner networks, and faculty and institutional partners
+          (e.g. Angelo State University) share program information with their students.
+        </p>
+      </div>
+    </div>
+    <p class="narrow" style="margin-top:1.25rem">
+      Recruitment materials — posters and one-page flyers — are developed with the Marketing and
+      Communications Section of the Whitacre College of Engineering Dean's Office.
+    </p>
+  </div>
+</Base>

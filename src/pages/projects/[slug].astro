@@ -1,0 +1,140 @@
+---
+import Base from '../../layouts/Base.astro';
+import { projects, thrusts, thrustOf } from '../../data/projects';
+import { mentors } from '../../data/team';
+
+export function getStaticPaths() {
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const t = thrusts[thrustOf(project.id)];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const idx = projects.findIndex((p) => p.id === project.id);
+const prev = projects[(idx - 1 + projects.length) % projects.length];
+const next = projects[(idx + 1) % projects.length];
+const ordinal = ['var(--ord-1)', 'var(--ord-2)', 'var(--ord-3)', 'var(--ord-4)'];
+const mentorInfo = (name: string) => mentors.find((m) => m.name.includes(name.split(' ').slice(-1)[0]));
+---
+
+<Base
+  title={project.title}
+  eyebrow={`Project ${project.id} · ${t.name}`}
+  section="(b)"
+  lede={project.short}
+  description={project.short}
+>
+  <div class="wrap section">
+    <div class="layout">
+      <article class="body">
+        <h2 style="margin-top:0">Objective</h2>
+        <p class="lede" style="font-size:1.05rem">{project.objective}</p>
+
+        <h2>Contributions and significance</h2>
+        <p>{project.significance}</p>
+
+        <h2>Benefits to students</h2>
+        <p>{project.benefits}</p>
+        <div class="callout"><b>Entry requirements.</b> {project.entryBarrier}</div>
+
+        <h2>Research plan</h2>
+        <ol class="phases">
+          {project.phases.map((ph, i) => (
+            <li style={`--accent:${ordinal[i]}`}>
+              <div class="ph-head">
+                <span class="ph-badge" style={`background:${ordinal[i]};color:${i === 0 ? '#0b1c30' : '#fff'}`}>{ph.label}</span>
+                <span class="ph-weeks">{ph.weeks}</span>
+              </div>
+              <h3>{ph.title}</h3>
+              <p>{ph.body}</p>
+            </li>
+          ))}
+        </ol>
+      </article>
+
+      <aside class="side">
+        <div class="card">
+          <h4 style="margin-top:0">Research mentors</h4>
+          {project.mentors.map((m) => {
+            const info = mentorInfo(m);
+            return (
+              <div class="mentor">
+                <b>{info?.name ?? m}</b>
+                <span>{info?.position}</span>
+              </div>
+            );
+          })}
+          <p style="margin:0.75rem 0 0"><a href={`${base}/mentors`} style="font-size:.85rem">All mentors →</a></p>
+        </div>
+
+        <div class="card">
+          <h4 style="margin-top:0">Skills students build</h4>
+          <div class="tag-row">
+            {project.skills.map((s) => <span class="tag">{s}</span>)}
+          </div>
+        </div>
+
+        <div class="card">
+          <h4 style="margin-top:0">Expected products</h4>
+          <ul style="margin:0;font-size:.9rem;color:var(--text-secondary)">
+            {project.deliverables.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4 style="margin-top:0">At a glance</h4>
+          <dl>
+            <dt>Thrust</dt><dd><span class="tag"><span class="dot" style={`background:${t.color}`}></span>{t.name}</span></dd>
+            <dt>Focus area</dt><dd>{project.domain}</dd>
+            <dt>Duration</dt><dd>10 weeks · {project.phases.length} phases</dd>
+            <dt>Infrastructure</dt><dd>REPACSS</dd>
+          </dl>
+        </div>
+      </aside>
+    </div>
+
+    <nav class="pager">
+      <a href={`${base}/projects/${prev.slug}`}>← Project {prev.id}: {prev.title}</a>
+      <a href={`${base}/projects`}>All projects</a>
+      <a href={`${base}/projects/${next.slug}`}>Project {next.id}: {next.title} →</a>
+    </nav>
+  </div>
+</Base>
+
+<style>
+  .layout { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 62rem) {
+    .layout { grid-template-columns: minmax(0, 1fr) 20rem; align-items: start; }
+    .side { position: sticky; top: 5.5rem; }
+  }
+  .body p { max-width: 56em; }
+  .side { display: grid; gap: 1rem; }
+  .side h4 { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .mentor { display: flex; flex-direction: column; margin-bottom: 0.6rem; font-size: 0.9rem; }
+  .mentor span { color: var(--text-muted); font-size: 0.82rem; }
+  .side dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 0.75rem; font-size: 0.87rem; align-items: baseline; }
+  .side dt { color: var(--text-muted); }
+  .side dd { margin: 0; }
+
+  ol.phases { list-style: none; padding: 0; margin: 1.25rem 0 0; }
+  ol.phases li {
+    border-left: 3px solid var(--accent);
+    padding: 0.2rem 0 0.6rem 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  .ph-head { display: flex; align-items: center; gap: 0.6rem; }
+  .ph-badge { font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; }
+  .ph-weeks { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+  ol.phases h3 { margin: 0.45rem 0 0.35rem; font-size: 1.05rem; }
+  ol.phases p { margin: 0; color: var(--text-secondary); }
+
+  .pager {
+    display: grid; gap: 0.75rem; margin-top: 3rem; padding-top: 1.25rem;
+    border-top: 1px solid var(--border); font-size: 0.85rem;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+  .pager a { text-decoration: none; color: var(--text-secondary); }
+  .pager a:hover { color: var(--brand); }
+  .pager a:nth-child(2) { text-align: center; }
+  .pager a:last-child { text-align: right; }
+</style>

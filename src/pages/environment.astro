@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import RepacssFigure from '../components/figures/RepacssFigure.astro';
+---
+
+<Base
+  title="Research Environment"
+  eyebrow="The Research Environment"
+  section="(c)"
+  lede="A Carnegie R1 host institution, a Computer Science department with established AI and HPC laboratories, and student access to REPACSS — an NSF-funded advanced computing platform."
+  description="Texas Tech University's research setting for the ASPIRE REU Site, including the REPACSS HPC and AI cluster."
+>
+  <div class="wrap section">
+    <h2 id="repacss" style="margin-top:0">Advanced computing: REPACSS</h2>
+    <p class="narrow">
+      Each REU student has a dedicated workspace and computer in their mentor's laboratory, working
+      alongside postdoctoral, graduate, and undergraduate researchers, plus remote access to Texas Tech's
+      REPACSS cluster — advanced HPC and AI infrastructure for large-scale simulation, data analytics, and
+      AI workloads. Students receive hands-on training in Linux, software environments, data management,
+      secure remote access, and Slurm-based job submission.
+    </p>
+
+    <Figure
+      number="4"
+      title="How REU students reach and use REPACSS."
+      caption="Aggregate figures are derived from the per-node counts stated in the proposal. Several projects study the monitoring plane itself, so the cluster is both the instrument and the object of study."
+    >
+      <RepacssFigure />
+    </Figure>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">110</div><div class="lbl">CPU compute nodes</div></div>
+      <div class="stat"><div class="num">256</div><div class="lbl">AMD EPYC cores per node</div></div>
+      <div class="stat"><div class="num">1.5 TB</div><div class="lbl">memory per CPU node</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">GPU nodes</div></div>
+      <div class="stat"><div class="num">32</div><div class="lbl">NVIDIA H100 NVL GPUs</div></div>
+    </div>
+
+    <h2 id="institution">Host institution</h2>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 style="margin-top:0">Texas Tech University</h3>
+        <p>
+          A Carnegie R1 research university serving more than 42,000 students — about 33,000 undergraduate
+          and 7,000 graduate — from all 50 states and over 100 countries. TTU is committed to student
+          success, research, and preparing students for a globally competitive workforce.
+        </p>
+        <p style="margin-bottom:0">
+          The <b>Center for Transformative Undergraduate Experiences (TrUE)</b> strengthens TTU's
+          undergraduate research culture through research programs, faculty mentoring, funding
+          opportunities, and the Texas Tech Undergraduate Research Conference.
+        </p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Department of Computer Science</h3>
+        <p>
+          More than 1,200 students and 31 faculty members, with BS, MS, and PhD programs in Computer
+          Science, a Master's in Software Engineering, and a combined bachelor's-and-master's pathway
+          completed in five years.
+        </p>
+        <p style="margin-bottom:0">
+          Faculty research spans artificial intelligence, high-performance computing, cybersecurity,
+          software engineering, data science, cloud computing, and cyber-physical systems.
+        </p>
+      </div>
+    </div>
+
+    <h3>Laboratories and centers</h3>
+    <div class="grid grid-3">
+      <div class="card"><h4 style="margin-top:0">DISCL</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">The Data-Intensive Scalable Computing Laboratory, led by Dr. Chen — an internationally recognized HPC laboratory.</p></div>
+      <div class="card"><h4 style="margin-top:0">NSF Cloud and Autonomic Computing Center</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">An NSF Industry–University Cooperative Research Center hosted at TTU.</p></div>
+      <div class="card"><h4 style="margin-top:0">Center for the Science and Engineering of Cyber Security</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">Departmental center supporting security and assurance research.</p></div>
+      <div class="card"><h4 style="margin-top:0">High Performance Computing Center (HPCC)</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">University computing center supporting research computing across TTU.</p></div>
+      <div class="card"><h4 style="margin-top:0">DisAPP Lab</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">Directed by Dr. Salman; security and privacy in distributed AI systems.</p></div>
+      <div class="card"><h4 style="margin-top:0">AI4CSE Lab</h4><p style="font-size:.92rem;color:var(--text-secondary);margin:0">Where students in the clinical-agents project collaborate with faculty and graduate researchers.</p></div>
+    </div>
+
+    <h2 id="dissemination">Where students present their work</h2>
+    <p class="narrow">
+      Seminars, workshops, and group activities are held in dedicated space within the Computer Science
+      department. Students have opportunities to share their research through the <b>Texas Tech
+      Undergraduate Research Conference</b>, the <b>Whitacre College of Engineering Research Day</b>, and
+      <b>NCUR</b>. As projects develop, students are encouraged to work with their mentors toward
+      presentations and publications in appropriate AI, HPC, cybersecurity, and related research venues.
+    </p>
+
+    <h2 id="post-program">Post-program mentoring</h2>
+    <div class="callout">
+      The project team maintains connections with participants through LinkedIn, Discord, and periodic
+      virtual meetings. Students are encouraged to continue collaborating with their mentors on research
+      projects and publications, and mentors provide continued guidance on graduate-school preparation and
+      career planning, as well as recommendation letters when appropriate.
+    </div>
+  </div>
+</Base>
