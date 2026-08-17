@@ -79,13 +79,14 @@ export type Week = {
   activities: { code: string; name: string; description: string; kind: ActivityKind }[];
 };
 
-export type ActivityKind = 'training' | 'research' | 'mentoring' | 'community' | 'assessment' | 'dissemination';
+export type ActivityKind = 'training' | 'research' | 'mentoring' | 'community' | 'cultural' | 'assessment' | 'dissemination';
 
 export const activityKindLabels: Record<ActivityKind, string> = {
   training: 'Training & seminars',
   research: 'Research & development',
   mentoring: 'Mentoring & feedback',
   community: 'Community building',
+  cultural: 'Cultural activities',
   assessment: 'Assessment & evaluation',
   dissemination: 'Dissemination',
 };
@@ -95,10 +96,11 @@ export const timetable: Week[] = [
     week: 1,
     activities: [
       { code: 'A1.1', name: 'Program Orientation', description: 'Introduction to the program, mentors, resources, expectations, and schedule.', kind: 'training' },
-      { code: 'A1.2', name: 'Research Methods I', description: 'Seminar on research methodologies, impacts, and literature review.', kind: 'training' },
-      { code: 'A1.3', name: 'Research Problems', description: 'Mentors introduce available projects and meet with students.', kind: 'mentoring' },
-      { code: 'A1.4', name: 'Project Selection', description: 'Students pair with mentors, finalize research problems, set goals.', kind: 'mentoring' },
-      { code: 'A1.5', name: 'Team-Building', description: 'A one-day activity at the Texas Tech Recreational Sports Center.', kind: 'community' },
+      { code: 'A1.2', name: 'Pre-Program Survey', description: 'Students participate in pre-program survey evaluations with the CRA CERP team.', kind: 'assessment' },
+      { code: 'A1.3', name: 'Research Methods I', description: 'Seminar on research methodologies, impacts, and literature review.', kind: 'training' },
+      { code: 'A1.4', name: 'Research Problems', description: 'Mentors introduce available projects and meet with students.', kind: 'mentoring' },
+      { code: 'A1.5', name: 'Project Selection', description: 'Students pair with mentors, finalize research problems, set goals.', kind: 'mentoring' },
+      { code: 'A1.6', name: 'Team-Building', description: 'A one-day activity at the Texas Tech Recreational Sports Center. Students also connect with other students and all mentors on LinkedIn and Discord.', kind: 'community' },
     ],
   },
   {
@@ -106,7 +108,7 @@ export const timetable: Week[] = [
     activities: [
       { code: 'A2.1', name: 'Ethical Conduct', description: 'Seminar on research integrity, authorship, and data management.', kind: 'training' },
       { code: 'A2.2', name: 'Initial Research', description: 'Participants begin data preparation, and implementation/theoretical analysis.', kind: 'research' },
-      { code: 'A2.3', name: 'Community-Building Picnic', description: 'A local picnic for participants, mentors, and graduate students to strengthen trust, teamwork, and sense of belonging and community.', kind: 'community' },
+      { code: 'A2.3', name: 'Team-Building Picnic', description: 'A local picnic for participants, mentors, and graduate students to strengthen trust, teamwork, and sense of belonging and community.', kind: 'community' },
     ],
   },
   {
@@ -115,6 +117,7 @@ export const timetable: Week[] = [
       { code: 'A3.1', name: 'Mentor Seminar I', description: 'A mentor presents their research area, methods, challenges, and applications.', kind: 'training' },
       { code: 'A3.2', name: 'R&D', description: 'Participants continue research and development, meet their mentors, present their progress, preliminary findings, and challenges.', kind: 'research' },
       { code: 'A3.3', name: 'Mentoring Meeting', description: 'Mentors meet students, review progress, and provide feedback.', kind: 'mentoring' },
+      { code: 'A3.4', name: 'Cultural Activity I', description: 'Mentors and students visit the Museum of Texas Tech University (free of charge).', kind: 'cultural' },
     ],
   },
   {
@@ -123,6 +126,7 @@ export const timetable: Week[] = [
       { code: 'A4.1', name: 'Research Methods II', description: 'Seminar on data analysis, interpretation, evaluation, and presentation of results.', kind: 'training' },
       { code: 'A4.2', name: 'R&D', description: 'Participants continue research and development, meet their mentors, present their progress, preliminary findings, and challenges.', kind: 'research' },
       { code: 'A4.3', name: 'Mentoring Meeting', description: 'Mentors meet students, review progress, and provide feedback.', kind: 'mentoring' },
+      { code: 'A4.4', name: 'Cultural Activity II', description: 'Mentors and students visit the American Windmill Museum ($10 per person).', kind: 'cultural' },
     ],
   },
   {
@@ -130,7 +134,7 @@ export const timetable: Week[] = [
     activities: [
       { code: 'A5.1', name: 'Mentor Seminar II', description: 'A mentor presents their research area, methods, challenges, and applications.', kind: 'training' },
       { code: 'A5.2', name: 'R&D', description: 'Participants continue research and development, meet their mentors, present their progress, preliminary findings, and challenges.', kind: 'research' },
-      { code: 'A5.3', name: 'Mid-Program Review and Feedback', description: 'Students present their work and receive feedback from mentors for refining the projects. Conduct mid-program survey evaluations with the CRA CERP team.', kind: 'assessment' },
+      { code: 'A5.3', name: 'Mid-Program Review and Feedback', description: 'Students present their work and receive mentor feedback for project refinement. Mid-program survey evaluations are conducted with the CRA CERP team.', kind: 'assessment' },
     ],
   },
   {
@@ -138,6 +142,7 @@ export const timetable: Week[] = [
     activities: [
       { code: 'A6.1', name: 'Student Professional Development Seminar', description: 'Seminar on communication, teamwork, networking, and professional skills and how to explain research to diverse audiences.', kind: 'training' },
       { code: 'A6.2', name: 'R&D', description: 'Participants continue research and development, meet their mentors, present their progress, preliminary findings, and challenges.', kind: 'research' },
+      { code: 'A6.3', name: 'Cultural Activity III', description: 'Mentors and students visit the National Ranching Heritage Center (free of charge).', kind: 'cultural' },
     ],
   },
   {
@@ -146,6 +151,7 @@ export const timetable: Week[] = [
       { code: 'A7.1', name: 'Mentor Seminar III', description: 'A mentor presents their research area, methods, challenges, and applications.', kind: 'training' },
       { code: 'A7.2', name: 'Research Evaluation', description: 'Students present their progress, experimental results, or theoretical findings.', kind: 'assessment' },
       { code: 'A7.3', name: 'Peer Discussion', description: 'Students share progress and exchange feedback across different research teams.', kind: 'community' },
+      { code: 'A7.4', name: 'Cultural Activity IV', description: 'Mentors and students visit the Buddy Holly Center ($10 per person).', kind: 'cultural' },
     ],
   },
   {
@@ -168,8 +174,8 @@ export const timetable: Week[] = [
     week: 10,
     activities: [
       { code: 'A10.1', name: 'Public Oral and Poster Presentations', description: 'Students present their research findings during a full-day conference with both oral and poster presentations. College faculty and staff are invited to attend.', kind: 'dissemination' },
-      { code: 'A10.3', name: 'Final Deliverables', description: 'Students submit reports, posters, code, data, and project materials.', kind: 'dissemination' },
-      { code: 'A10.4', name: 'Assessment and Future Engagement', description: 'Students complete program exit survey evaluations and develop plans for continued engagement, e.g., paper submissions, conference attendance.', kind: 'assessment' },
+      { code: 'A10.2', name: 'Final Deliverables', description: 'Students submit reports, posters, code, data, and project materials.', kind: 'dissemination' },
+      { code: 'A10.3', name: 'Assessment and Future Engagement', description: 'Students complete program exit survey evaluations and develop plans for continued engagement, e.g., paper submissions, conference attendance.', kind: 'assessment' },
     ],
   },
 ];

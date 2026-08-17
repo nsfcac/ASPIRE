@@ -6,7 +6,7 @@ const x0 = labelW + 8;
 const cellW = 76;
 const weeks = 10;
 
-const kinds: ActivityKind[] = ['training', 'mentoring', 'community', 'assessment', 'dissemination'];
+const kinds: ActivityKind[] = ['training', 'mentoring', 'community', 'cultural', 'assessment', 'dissemination'];
 
 // codes per kind per week
 const chips = kinds.map((k) => ({
@@ -30,8 +30,8 @@ const gridBottom = rowY(kinds.length) - 8;
   <desc id="tl-desc">
     A ten-week grid. A typical research project runs three phases: weeks 1 to 3 training and baselines,
     weeks 4 to 7 focused investigation, and weeks 8 to 10 validation and communication. Cohort activities —
-    training seminars, mentoring, community building, assessment and dissemination — are distributed across
-    the ten weeks and labeled with the activity codes used in the program timetable.
+    training seminars, mentoring, community building, cultural visits, assessment and dissemination — are
+    distributed across the ten weeks and labeled with the activity codes used in the program timetable.
   </desc>
 
   <!-- week header -->
