@@ -24,25 +24,46 @@ const mentorsOf = (pid: number) =>
   mentors.flatMap((m, i) => (m.projects.includes(pid) ? [i] : []));
 
 /**
- * Hovering a mentor box dims everything not connected to them. The rules have to
- * correlate a hovered `.m<i>` with the links and project boxes carrying the same
- * class, which plain CSS cannot express generically — so one rule group per mentor
- * is generated here instead. Emitted inline (not as a scoped <style>) because the
- * selectors are already namespaced under .mentormap-fig.
+ * Hovering either end of the map dims everything not connected to it. The rules have
+ * to correlate the hovered node with the links and boxes on the other side, which plain
+ * CSS cannot express generically — so one rule group per mentor and per project is
+ * generated here instead. Emitted inline (not as a scoped <style>) because the selectors
+ * are already namespaced under .mentormap-fig.
  *
  * Resting appearance stays entirely in presentational attributes: scripts/export-figures.mjs
  * lifts the bare <svg> out of the built HTML with no stylesheet attached, so anything
  * these rules did unconditionally would be missing from the exported PDF.
  */
-const hoverCss = mentors
-  .map((_, i) => {
-    const on = `.mentormap-fig:has(.mnode.m${i}:hover)`;
-    return `
-${on} .node:not(.m${i}), ${on} .link:not(.m${i}) { opacity: .12; }
-${on} .link.m${i} { opacity: 1; stroke-width: 3; }
-${on} .pnode.m${i} .box { stroke: var(--border-strong); stroke-width: 1.5; }`;
-  })
-  .join('');
+const DIM = '{ opacity: .12; }';
+const LIT = '{ opacity: 1; stroke-width: 3; }';
+const BOX = '{ stroke: var(--border-strong); stroke-width: 1.5; }';
+
+/** Mentor → their projects. Every node carrying the mentor's class survives. */
+const fromMentor = mentors.map((_, i) => {
+  const on = `.mentormap-fig:has(.mnode.m${i}:hover)`;
+  return `
+${on} .node:not(.m${i}), ${on} .link:not(.m${i}) ${DIM}
+${on} .link.m${i} ${LIT}
+${on} .pnode.m${i} .box ${BOX}`;
+});
+
+/**
+ * Project → its mentors. The mirror image needs a different keep-set: a co-mentored
+ * project shares its m-classes with the mentor's *other* projects, so keying off those
+ * would light those up too. Only the hovered project and the mentor boxes themselves
+ * survive, matched as `.mnode.m<i>` so sibling projects stay dimmed.
+ */
+const fromProject = projects.map((p) => {
+  const on = `.mentormap-fig:has(.pnode.p${p.id}:hover)`;
+  const keep = mentorsOf(p.id).map((i) => `:not(.mnode.m${i})`).join('');
+  const boxes = mentorsOf(p.id).map((i) => `${on} .mnode.m${i} .box`).join(', ');
+  return `
+${on} .node:not(.pnode.p${p.id})${keep}, ${on} .link:not(.p${p.id}) ${DIM}
+${on} .link.p${p.id} ${LIT}
+${boxes} ${BOX}`;
+});
+
+const hoverCss = [...fromMentor, ...fromProject].join('');
 ---
 
 <svg viewBox={`0 0 920 ${height}`} role="img" aria-labelledby="mm-title mm-desc" class="mentormap-fig">
@@ -68,7 +89,7 @@ ${on} .pnode.m${i} .box { stroke: var(--border-strong); stroke-width: 1.5; }`;
       const mid = (x1 + x2) / 2;
       return (
         <path
-          class={`link m${mi}`}
+          class={`link m${mi} p${pid}`}
           d={`M${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`}
           fill="none"
           stroke={t.color}
@@ -91,7 +112,7 @@ ${on} .pnode.m${i} .box { stroke: var(--border-strong); stroke-width: 1.5; }`;
   {projects.map((p, i) => {
     const t = thrusts[thrustOf(p.id)];
     return (
-      <g class={['node pnode', ...mentorsOf(p.id).map((mi) => `m${mi}`)].join(' ')}>
+      <g class={['node pnode', `p${p.id}`, ...mentorsOf(p.id).map((mi) => `m${mi}`)].join(' ')}>
         <rect class="box" x={pX} y={pTop + i * pStep} width={pBoxW} height={pBoxH} rx="7" fill="var(--surface-1)" stroke="var(--border)" />
         <rect x={pX} y={pTop + i * pStep} width="4" height={pBoxH} rx="2" fill={t.color} />
         <text x={pX + 14} y={pTop + i * pStep + 15} font-size="11.5" font-weight="700" fill="var(--text-primary)">Project {p.id}</text>
@@ -118,10 +139,11 @@ ${on} .pnode.m${i} .box { stroke: var(--border-strong); stroke-width: 1.5; }`;
   /* Hover is an enhancement: the same mapping is in the figure's <desc> and in each
      mentor's "Projects in this Site" list, so nothing here is the only route to it. */
   .mentormap-fig .node, .mentormap-fig .link { transition: opacity .15s ease, stroke-width .15s ease; }
-  .mentormap-fig .mnode { cursor: default; }
+  .mentormap-fig .mnode, .mentormap-fig .pnode { cursor: default; }
   /* Neutral, not brand: the figure's colors already encode thrusts, and the dimming
      carries the signal — a red outline would read as a fourth data color. */
-  .mentormap-fig .mnode:hover .box { stroke: var(--text-primary); stroke-width: 1.75; }
+  .mentormap-fig .mnode:hover .box,
+  .mentormap-fig .pnode:hover .box { stroke: var(--text-primary); stroke-width: 1.75; }
   @media (prefers-reduced-motion: reduce) {
     .mentormap-fig .node, .mentormap-fig .link { transition: none; }
   }
