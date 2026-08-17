@@ -74,7 +74,7 @@ export const mentors: Mentor[] = [
       'Hardware–software co-design',
     ],
     mentoring:
-      'Mentored three undergraduate and five graduate researchers in HPC. Student work includes a master’s student-led first-author publication at IEEE CLOUD.',
+      'Mentored three undergraduate and five graduate researchers in HPC. Student work includes an undergraduate student-led first-author publication at IEEE CLOUD.',
     projects: [1, 2, 3, 4],
     lead: 'Co-leads HPC training activities.',
   },
