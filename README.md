@@ -34,7 +34,7 @@ the data updates both.
 - **Research phases across the ten weeks** — all nine projects as phase bars (projects)
 - **How REU students reach and use REPACSS** — access path, partitions, monitoring plane (environment)
 - **Mentor–project map** — bipartite mentor ↔ project links (mentors)
-- **Recruitment and selection pipeline** — six-stage funnel with per-stage detail (recruitment)
+- **Recruitment and selection funnel** — six-stage funnel with per-stage detail (recruitment)
 - **Weight of each review criterion** — rubric weights (recruitment)
 - **Evaluation logic model and assessment schedule** — inputs → outcomes, plus the survey timeline (evaluation)
 
