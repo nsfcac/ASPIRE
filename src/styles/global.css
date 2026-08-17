@@ -47,7 +47,7 @@
 
   --radius: 10px;
   --radius-sm: 6px;
-  --maxw: 78rem;
+  --maxw: 69.3rem; /* ~1248px at the 18px root — holds the container width steady */
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.05);
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -127,14 +127,16 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+/* Root size drives every rem on the site; a percentage keeps the browser's
+   own font-size preference intact instead of overriding it with px. */
+html { font-size: 112.5%; scroll-behavior: smooth; scroll-padding-top: 5rem; }
 
 body {
   margin: 0;
   background: var(--surface-0);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
