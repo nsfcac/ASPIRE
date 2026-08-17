@@ -170,7 +170,7 @@ const link = (h: string) => `${base}${h}`;
           {visibleNav.slice(1).map((n) => (
             <tr>
               <td><a href={link(n.href)}><b>{n.label}</b></a></td>
-              <td>{n.section}</td>
+              <td>{n.section ?? '—'}</td>
               <td>
                 {n.href === '/projects' && 'All nine projects: objectives, significance, benefits to students, and week-by-week research plans.'}
                 {n.href === '/program' && 'The ten-week schedule, the full activity timetable, and student and mentor professional development.'}
@@ -178,6 +178,7 @@ const link = (h: string) => `${base}${h}`;
                 {n.href === '/mentors' && 'The five research mentors, their expertise, and their undergraduate mentoring records.'}
                 {n.href === '/recruitment' && 'Eligibility, application materials, the selection rubric, and the national advertising plan.'}
                 {n.href === '/evaluation' && 'Formative and summative evaluation design, instruments, and the assessment schedule.'}
+                {n.href === '/cohort' && 'The students selected for each summer cohort, announced before the program begins.'}
                 {n.href === '/impacts' && 'Broader impacts of the REU Site.'}
               </td>
             </tr>

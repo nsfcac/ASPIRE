@@ -1,0 +1,19 @@
+---
+/** Gender-neutral silhouette shown in a cohort slot until a portrait exists. */
+---
+
+<svg class="person-ph" viewBox="0 0 64 64" role="img" aria-label="Portrait placeholder" focusable="false">
+  <rect width="64" height="64" fill="var(--surface-2)" />
+  <circle cx="32" cy="25" r="10.5" fill="var(--silhouette)" />
+  <path d="M32 39c-10.5 0-19 7.2-19 16.1V64h38v-8.9C51 46.2 42.5 39 32 39z" fill="var(--silhouette)" />
+</svg>
+
+<style>
+  .person-ph {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    --silhouette: var(--border-strong);
+  }
+</style>

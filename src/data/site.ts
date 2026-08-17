@@ -15,7 +15,8 @@ export const site = {
 type NavItem = {
   href: string;
   label: string;
-  section: string;
+  /** Proposal section the page covers; omitted for pages outside the proposal. */
+  section?: string;
   /** Kept in the site but left out of the nav and the page map; still reachable by URL. */
   hidden?: boolean;
 };
@@ -27,6 +28,7 @@ export const nav: NavItem[] = [
   { href: '/environment', label: 'Research Environment', section: '(c)' },
   { href: '/mentors', label: 'Mentors', section: '(c)' },
   { href: '/recruitment', label: 'Recruitment & Selection', section: '(d)' },
+  { href: '/cohort', label: 'Cohort' },
   { href: '/evaluation', label: 'Evaluation', section: '(f)', hidden: true },
   { href: '/impacts', label: 'Broader Impacts', section: '(g)' },
 ];

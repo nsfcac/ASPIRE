@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import PersonPlaceholder from '../components/PersonPlaceholder.astro';
+import { cohorts, cohortSize } from '../data/cohorts';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+/** One slot per funded seat; a slot is empty until its member is filled in. */
+const slots = (cohort: (typeof cohorts)[number]) =>
+  Array.from({ length: Math.max(cohortSize, cohort.members.length) }, (_, i) => cohort.members[i]);
+---
+
+<Base
+  title="Cohort"
+  eyebrow="Cohort"
+  lede="Each summer, ten undergraduate researchers join ASPIRE for ten weeks of mentored research at the intersection of AI and high-performance computing."
+  description="The ASPIRE REU cohorts for 2027, 2028, and 2029."
+>
+  <div class="wrap section">
+    <p class="narrow">
+      Participants are selected each spring and announced before the program begins. This page will
+      introduce each cohort as it is formed.
+    </p>
+
+    {cohorts.map((c) => (
+      <section class="cohort">
+        <div class="cohort-head">
+          <h2 id={`c${c.year}`}>{c.year} Cohort</h2>
+          <span class="tag">{c.members.length > 0 ? `${c.members.length} students` : c.status}</span>
+        </div>
+        <ul class="people">
+          {slots(c).map((m, i) => (
+            <li class="person">
+              <div class="portrait">
+                {m?.photo
+                  ? <img src={`${base}${m.photo}`} alt={m.name} loading="lazy" width="200" height="200" />
+                  : <PersonPlaceholder />}
+              </div>
+              <p class="nm">{m?.name ?? `Student ${i + 1}`}</p>
+              <p class="meta">{m?.institution ?? 'To be announced'}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .cohort { padding: 2rem 0; border-top: 1px solid var(--border); }
+  .cohort-head { display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+  .cohort-head h2 { margin: 0 0 0.75rem; }
+
+  ul.people {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 34rem) { ul.people { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 56rem) { ul.people { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+  .person { margin: 0; min-width: 0; }
+  .portrait {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+  .nm { margin: 0.55rem 0 0; font-size: 0.92rem; font-weight: 650; }
+  .meta { margin: 0.1rem 0 0; font-size: 0.82rem; color: var(--text-muted); }
+</style>
