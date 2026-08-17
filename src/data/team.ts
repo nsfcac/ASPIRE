@@ -6,6 +6,7 @@ export type Mentor = {
   mentoring: string;
   projects: number[];
   lead?: string;
+  website?: string;
 };
 
 export const mentors: Mentor[] = [
@@ -13,6 +14,7 @@ export const mentors: Mentor[] = [
     name: 'Dr. Yong Chen',
     role: 'PI & Research Mentor',
     position: 'Professor and Chair; Director, Data-Intensive Scalable Computing Laboratory (DISCL)',
+    website: 'https://www.myweb.ttu.edu/yonchen/',
     expertise: [
       'Data-intensive computing',
       'Parallel and distributed computing',
@@ -29,6 +31,7 @@ export const mentors: Mentor[] = [
     name: 'Dr. Maaz Amjad',
     role: 'Co-PI & Research Mentor',
     position: 'Assistant Professor of Practice',
+    website: 'https://maazamjad.com/',
     expertise: ['Artificial intelligence', 'Natural language processing', 'Responsible AI'],
     mentoring:
       'Mentored 12+ undergraduates in ML, NLP, responsible AI, and software development. Students have coauthored publications at ACL, ACM, and in journals.',
@@ -39,6 +42,7 @@ export const mentors: Mentor[] = [
     name: 'Dr. Susan Mengel',
     role: 'Research Mentor (Senior Personnel)',
     position: 'Associate Professor; Undergraduate Program Coordinator',
+    website: 'https://www.depts.ttu.edu/cs/faculty/susan_a._mengel/index.php',
     expertise: ['Information retrieval', 'Security and assurance', 'CS education'],
     mentoring:
       'Mentored undergraduate and graduate researchers. Two recent honors students presented their research at the TTU Undergraduate Research Conference.',
@@ -49,6 +53,7 @@ export const mentors: Mentor[] = [
     name: 'Dr. Tara Salman',
     role: 'Research Mentor (Senior Personnel)',
     position: 'Assistant Professor; Director, DisAPP Lab',
+    website: 'https://sites.google.com/view/tsalman/home',
     expertise: ['Security and privacy in distributed AI systems', 'Secure distributed AI'],
     mentoring:
       'Mentored 5+ undergraduates through McNair, Honors, international REU, and independent studies. Students have pursued graduate study, presented research, and coauthored publications.',
@@ -59,6 +64,7 @@ export const mentors: Mentor[] = [
     name: 'Dr. Jie Li',
     role: 'Research Mentor (Senior Personnel)',
     position: 'Research Assistant Professor',
+    website: 'https://lijie.me/',
     expertise: [
       'High-performance computing',
       'Systems security',
