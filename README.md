@@ -41,6 +41,18 @@ the data updates both.
 Data colors come from a colorblind-safe categorical palette (three all-pairs-validated hues) plus a
 single-hue ordinal ramp for phase progression; every colored mark is also directly labeled.
 
+### Exporting figures for the proposal
+
+```bash
+npm run export:figures    # writes figures/<slug>.pdf and .svg (gitignored)
+```
+
+Each figure is exported on its own, with no caption and no page furniture. The PDF page is the
+figure's bounding box, so `\includegraphics` needs no cropping — scale with `width=\linewidth`.
+Text stays live text (searchable, and embedded as CID TrueType subsets rather than the Type 3
+fonts NSF's PDF checks flag), which is why the export substitutes Helvetica Neue for the site's
+`ui-sans-serif` stack. Requires Google Chrome; rerun after changing a figure or its data.
+
 ## Content source
 
 Page text is stored as structured data, not scattered through templates:

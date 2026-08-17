@@ -9,6 +9,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "export:figures": "astro build && node scripts/export-figures.mjs",
     "astro": "astro"
   },
   "dependencies": {
