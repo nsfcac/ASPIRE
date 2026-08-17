@@ -23,11 +23,11 @@ const cols = [
 ];
 
 const points = [
-  { x: 70, label: 'Pre-summer', when: 'before Week 1', items: ['Preflection survey', 'CERP pre-test', 'Informed consent'], kind: 'formative' },
-  { x: 285, label: 'Mid-summer', when: 'Weeks 5–6', items: ['Two mid-summer surveys', 'CERP mid-program check', 'Mid-program review'], kind: 'formative' },
-  { x: 510, label: 'Post-summer', when: 'Week 10', items: ['SURE III survey', 'CERP post-test', '30-minute exit interview'], kind: 'summative' },
-  { x: 720, label: 'One year later', when: '+12 months', items: ['CERP follow-up survey', 'Lopatto follow-up survey'], kind: 'summative' },
-  { x: 890, label: 'Long term', when: 'up to 5 years', items: ['Annual follow-up', 'Career & degree tracking'], kind: 'summative' },
+  { x: 70, label: 'Pre-program', when: 'Week 1', items: ['Informed consent', 'Pre-program survey', 'CERP pre-test'], kind: 'formative' },
+  { x: 285, label: 'Mid-program', when: 'Week 5', items: ['Mid-program review', 'CERP mid-program survey'], kind: 'formative' },
+  { x: 510, label: 'Post-summer', when: 'Week 10', items: ['Post-summer survey', 'CERP post-test'], kind: 'summative' },
+  { x: 720, label: 'One year later', when: '+12 months', items: ['CERP follow-up survey'], kind: 'summative' },
+  { x: 890, label: 'Long term', when: 'at least 5 years', items: ['Email, LinkedIn, Discord', 'Career & degree tracking'], kind: 'summative' },
 ];
 
 const colW = 176;
@@ -38,8 +38,9 @@ const gap = 12;
   <title id="ev-title">Evaluation logic model and assessment schedule</title>
   <desc id="ev-desc">
     A logic model runs from inputs and activities through outputs to short-term and long-term student
-    outcomes. Below it, an assessment schedule marks five data-collection points: pre-summer, mid-summer,
-    post-summer, one year later, and annual follow-up for up to five years.
+    outcomes. Below it, an assessment schedule marks five data-collection points: pre-program in Week 1,
+    mid-program in Week 5, post-summer in Week 10, a CERP follow-up one year later, and long-term
+    follow-up for at least five years.
   </desc>
 
   <defs>
@@ -95,10 +96,10 @@ const gap = 12;
 
   <rect x="16" y="430" width="928" height="42" rx="8" fill="var(--surface-2)" stroke="var(--border)" />
   <text x="30" y="448" font-size="11.5" fill="var(--text-secondary)">
-    Instruments: locally developed measures · Preflection, SURE III and Follow-Up surveys (Lopatto) · CRA CERP REU Evaluation Survey
+    Instruments: CRA CERP REU Evaluation Surveys · activity &amp; milestone logs · mentor–student meeting notes · student research products
   </text>
   <text x="30" y="464" font-size="11.5" fill="var(--text-secondary)">
-    Independent evaluation by an external evaluator from the Computing Research Association; findings reported annually to NSF.
+    External evaluation by the CRA Center for Evaluating the Research Pipeline; findings summarized in annual and final reports to NSF.
   </text>
 </svg>
 
