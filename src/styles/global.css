@@ -198,13 +198,14 @@ li { margin-bottom: 0.35em; }
 .brand-link {
   display: flex; align-items: baseline; gap: 0.55rem;
   font-family: var(--font-serif); font-weight: 700; font-size: 1.15rem;
-  color: var(--text-primary); text-decoration: none; white-space: nowrap;
+  color: var(--text-primary); text-decoration: none;
+  flex-wrap: wrap; /* the sub-label drops below the acronym on narrow screens */
 }
 .brand-link .mark {
   display: inline-block; width: 0.5rem; height: 1.05rem;
   background: var(--brand); border-radius: 2px; transform: translateY(0.1rem);
 }
-.brand-link .sub { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); }
+.brand-link .sub { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
 nav.main { margin-left: auto; display: flex; gap: 0.15rem; flex-wrap: wrap; align-items: center; }
 nav.main a {
   color: var(--text-secondary); text-decoration: none;
