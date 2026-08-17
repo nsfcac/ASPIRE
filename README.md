@@ -29,14 +29,14 @@ All figures are hand-authored inline SVG (`src/components/figures/`) — no char
 assets, theme-aware, and driven by the same data files that generate the page text, so a change to
 the data updates both.
 
-1. **Program framework** — national drivers → the AI ∩ HPC core → three thrusts → outcomes (home)
-2. **Ten-week program at a glance** — research phases + cohort activity tracks with Table 1 codes (program)
-3. **Research phases across the ten weeks** — all nine projects as phase bars (projects)
-4. **How REU students reach and use REPACSS** — access path, partitions, monitoring plane (environment)
-5. **Mentor–project map** — bipartite mentor ↔ project links (mentors)
-6. **Recruitment and selection pipeline** — six-stage funnel with per-stage detail (recruitment)
-7. **Weight of each review criterion** — rubric weights (recruitment)
-8. **Evaluation logic model and assessment schedule** — inputs → outcomes, plus the survey timeline (evaluation)
+- **Program framework** — national drivers → the AI ∩ HPC core → three thrusts → outcomes (home)
+- **Ten-week program at a glance** — research phases + cohort activity tracks with Table 1 codes (program)
+- **Research phases across the ten weeks** — all nine projects as phase bars (projects)
+- **How REU students reach and use REPACSS** — access path, partitions, monitoring plane (environment)
+- **Mentor–project map** — bipartite mentor ↔ project links (mentors)
+- **Recruitment and selection pipeline** — six-stage funnel with per-stage detail (recruitment)
+- **Weight of each review criterion** — rubric weights (recruitment)
+- **Evaluation logic model and assessment schedule** — inputs → outcomes, plus the survey timeline (evaluation)
 
 Data colors come from a colorblind-safe categorical palette (three all-pairs-validated hues) plus a
 single-hue ordinal ramp for phase progression; every colored mark is also directly labeled.

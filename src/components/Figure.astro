@@ -1,11 +1,10 @@
 ---
 interface Props {
   id?: string;
-  number: string;
   title: string;
   caption?: string;
 }
-const { id, number, title, caption } = Astro.props;
+const { id, title, caption } = Astro.props;
 ---
 
 <figure class="fig" id={id}>
@@ -13,7 +12,7 @@ const { id, number, title, caption } = Astro.props;
     <slot />
   </div>
   <figcaption>
-    <b>Figure {number}. {title}</b>{caption ? ` ${caption}` : ''}
+    <b>{title}</b>{caption ? ` ${caption}` : ''}
     <slot name="caption" />
   </figcaption>
 </figure>
