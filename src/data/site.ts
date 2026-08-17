@@ -12,13 +12,24 @@ export const site = {
     'Applications will be received and managed through the NSF Education and Training Application (ETAP) system.',
 };
 
-export const nav = [
+type NavItem = {
+  href: string;
+  label: string;
+  section: string;
+  /** Kept in the site but left out of the nav and the page map; still reachable by URL. */
+  hidden?: boolean;
+};
+
+export const nav: NavItem[] = [
   { href: '/', label: 'Overview', section: '(a)' },
   { href: '/projects', label: 'Research Projects', section: '(b)' },
   { href: '/program', label: 'Program & Timeline', section: '(a), (e)' },
   { href: '/environment', label: 'Research Environment', section: '(c)' },
   { href: '/mentors', label: 'Mentors', section: '(c)' },
   { href: '/recruitment', label: 'Recruitment & Selection', section: '(d)' },
-  { href: '/evaluation', label: 'Evaluation', section: '(f)' },
+  { href: '/evaluation', label: 'Evaluation', section: '(f)', hidden: true },
   { href: '/impacts', label: 'Broader Impacts', section: '(g)' },
 ];
+
+/** What the header, footer, and page map render. */
+export const visibleNav = nav.filter((n) => !n.hidden);

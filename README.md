@@ -18,7 +18,7 @@ Built with [Astro](https://astro.build), no runtime dependencies, deployed to Gi
 | `/environment` | (c) | REPACSS, host institution, laboratories, dissemination venues, post-program mentoring |
 | `/mentors` | (c) | The five research mentors, expertise, and mentoring records |
 | `/recruitment` | (d) | Eligibility, application materials, selection rubric, advertising plan |
-| `/evaluation` | (f) | Formative/summative evaluation, instruments, assessment schedule, CRA CERP |
+| `/evaluation` | (f) | Formative/summative evaluation, instruments, assessment schedule, CRA CERP — **hidden**: still built and reachable by URL, but left out of the nav (`hidden: true` in `src/data/site.ts`) |
 | `/impacts` | (g) | Broader impacts of the REU Site |
 
 ## Figures

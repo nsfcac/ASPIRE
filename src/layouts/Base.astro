@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, nav } from '../data/site';
+import { site, visibleNav } from '../data/site';
 
 interface Props {
   title: string;
@@ -47,7 +47,7 @@ const pageTitle = title === site.acronym ? `${site.acronym} — NSF REU Site` : 
           <span class="sub">NSF REU Site</span>
         </a>
         <nav class="main" aria-label="Main">
-          {nav.map((n) => (
+          {visibleNav.map((n) => (
             <a href={link(n.href)} aria-current={here === n.href ? 'page' : undefined}>{n.label}</a>
           ))}
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle light / dark">
@@ -80,7 +80,7 @@ const pageTitle = title === site.acronym ? `${site.acronym} — NSF REU Site` : 
           <strong style="color:var(--text-secondary)">{site.shortTitle}</strong> — {site.institution}, {site.college}.
         </p>
         <p style="margin-bottom:0">
-          Pages: {nav.map((n, i) => (
+          Pages: {visibleNav.map((n, i) => (
             <Fragment>{i === 0 ? '' : ' · '}<a href={link(n.href)}>{n.label}</a></Fragment>
           ))}
         </p>
