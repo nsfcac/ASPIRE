@@ -1,0 +1,22 @@
+---
+/**
+ * Export-only page: the print variants of the site figures, rendered bare so
+ * `npm run export:figures` can read them out of dist/. Not linked from the
+ * site's navigation — it exists so the proposal can use a figure whose
+ * proportions differ from the web one.
+ */
+import '../../styles/global.css';
+import FrameworkFigureCompact from '../../components/figures/FrameworkFigureCompact.astro';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Program framework (print variant) · ASPIRE</title>
+  </head>
+  <body style="margin:0;padding:1.5rem;background:var(--surface-0)">
+    <FrameworkFigureCompact />
+  </body>
+</html>

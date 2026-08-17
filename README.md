@@ -41,6 +41,11 @@ the data updates both.
 Data colors come from a colorblind-safe categorical palette (three all-pairs-validated hues) plus a
 single-hue ordinal ramp for phase progression; every colored mark is also directly labeled.
 
+A print-only variant of the framework figure lives in
+`src/components/figures/FrameworkFigureCompact.astro`, rendered by the unlisted page
+`/print/framework`. It carries the same content in a canvas ~30% shorter (960×520 vs 960×736) by
+flattening the Venn circles into ellipses. The website keeps the original.
+
 ### Exporting figures for the proposal
 
 ```bash

@@ -1,0 +1,134 @@
+---
+/**
+ * Print variant of FrameworkFigure for the proposal: same content and colours,
+ * but ~30% shorter. The circles become wide ellipses, which keeps the Venn
+ * reading while cutting the vertical space the intersection band costs.
+ * Not used on the website — see src/pages/print/framework.astro.
+ */
+import { thrusts, projects, type ThrustId } from '../../data/projects';
+
+const order: ThrustId[] = ['systems', 'ai-systems', 'trust'];
+const colW = 296;
+const gap = 20;
+const startX = 20;
+const cardY = 280;
+const cardH = 158;
+
+// Wrap into two lines (sequential, not greedy-refill). Done in frontmatter:
+// expressions containing `<` confuse the Astro template compiler.
+const wrap2 = (text: string, max: number): [string, string] => {
+  const words = text.split(' ');
+  let a = '';
+  let i = 0;
+  while (i < words.length && (a + ' ' + words[i]).trim().length <= max) {
+    a = (a + ' ' + words[i]).trim();
+    i += 1;
+  }
+  let b = words.slice(i).join(' ');
+  if (b.length > max) b = b.slice(0, max - 1).trimEnd() + '…';
+  return [a, b];
+};
+
+const titleLines = new Map(projects.map((p) => [p.id, wrap2(p.title, 42)]));
+
+const drivers = [
+  ['AI-ready U.S. workforce', 'NSF FY 2026–2030 Strategic Plan'],
+  ['Compute, memory and energy', 'demands of modern AI models'],
+  ['NSF-funded advanced', 'cyberinfrastructure'],
+];
+---
+
+<svg viewBox="0 0 960 520" role="img" aria-labelledby="fwc-title fwc-desc" class="framework-compact-fig">
+  <title id="fwc-title">ASPIRE program framework</title>
+  <desc id="fwc-desc">
+    National drivers feed an intellectual core at the intersection of artificial intelligence and
+    high-performance computing. That core is organized into three research thrusts — HPC systems and
+    performance, efficient and applied AI systems, and security, trust and learning — which contain the
+    nine REU projects and lead to student and workforce outcomes.
+  </desc>
+
+  <defs>
+    <marker id="fwc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--axis)" />
+    </marker>
+    <clipPath id="fwc-clip-ai">
+      <ellipse cx="380" cy="172" rx="165" ry="82" />
+    </clipPath>
+  </defs>
+
+  <!-- Band 1: national drivers -->
+  <text x="20" y="13" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--text-muted)">NATIONAL AND NSF CONTEXT</text>
+  {drivers.map((lines, i) => (
+    <g>
+      <rect x={20 + i * (colW + gap)} y={22} width={colW} height={44} rx="8" fill="var(--surface-2)" stroke="var(--border)" />
+      <text x={20 + i * (colW + gap) + colW / 2} y={41} font-size="12.5" font-weight="600" text-anchor="middle" fill="var(--text-primary)">{lines[0]}</text>
+      <text x={20 + i * (colW + gap) + colW / 2} y={57} font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">{lines[1]}</text>
+    </g>
+  ))}
+
+  <path d="M480 70 L480 84" stroke="var(--axis)" stroke-width="2" marker-end="url(#fwc-arrow)" />
+
+  <!-- Band 2: the intersection, flattened into ellipses -->
+  <ellipse cx="380" cy="172" rx="165" ry="82" fill="var(--c-1-soft)" stroke="var(--c-1)" stroke-width="2" />
+  <ellipse cx="580" cy="172" rx="165" ry="82" fill="var(--c-2-soft)" stroke="var(--c-2)" stroke-width="2" />
+  <g clip-path="url(#fwc-clip-ai)">
+    <ellipse cx="580" cy="172" rx="165" ry="82" fill="var(--surface-3)" stroke="var(--c-2)" stroke-width="2" />
+  </g>
+
+  <text x="315" y="160" font-size="15" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Artificial</text>
+  <text x="315" y="178" font-size="15" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Intelligence</text>
+  <text x="315" y="198" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">agentic AI · LLMs</text>
+  <text x="315" y="213" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">retrieval · model safety</text>
+
+  <text x="645" y="160" font-size="15" font-weight="700" text-anchor="middle" fill="var(--text-primary)">High-Performance</text>
+  <text x="645" y="178" font-size="15" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Computing</text>
+  <text x="645" y="198" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">GPUs · scheduling</text>
+  <text x="645" y="213" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">telemetry · power</text>
+
+  <text x="480" y="153" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">ASPIRE</text>
+  <text x="480" y="171" font-size="11" text-anchor="middle" fill="var(--text-secondary)">efficient</text>
+  <text x="480" y="186" font-size="11" text-anchor="middle" fill="var(--text-secondary)">inference,</text>
+  <text x="480" y="201" font-size="11" text-anchor="middle" fill="var(--text-secondary)">optimization,</text>
+  <text x="480" y="216" font-size="11" text-anchor="middle" fill="var(--text-secondary)">deployment</text>
+
+  <path d="M480 260 L480 274" stroke="var(--axis)" stroke-width="2" marker-end="url(#fwc-arrow)" />
+
+  <!-- Band 3: three thrusts -->
+  {order.map((key, i) => {
+    const t = thrusts[key];
+    const x = startX + i * (colW + gap);
+    return (
+      <g>
+        <rect x={x} y={cardY} width={colW} height={cardH} rx="10" fill="var(--surface-1)" stroke="var(--border)" />
+        <rect x={x} y={cardY} width={colW} height="4" rx="2" fill={t.color} />
+        <text x={x + 16} y={cardY + 26} font-size="13.5" font-weight="700" fill="var(--text-primary)">{t.name}</text>
+        {t.projects.map((pid, j) => {
+          const p = projects.find((pp) => pp.id === pid)!;
+          const lines = titleLines.get(pid)!;
+          const y = cardY + 44 + j * 36;
+          return (
+            <g>
+              <rect x={x + 14} y={y} width="24" height="17" rx="4" fill={t.color} />
+              <text x={x + 26} y={y + 12.5} font-size="10.5" font-weight="700" text-anchor="middle" fill="var(--surface-0)">P{p.id}</text>
+              <text x={x + 46} y={y + 8} font-size="11" fill="var(--text-secondary)">{lines[0]}</text>
+              <text x={x + 46} y={y + 21} font-size="11" fill="var(--text-secondary)">{lines[1]}</text>
+            </g>
+          );
+        })}
+      </g>
+    );
+  })}
+
+  <path d="M480 444 L480 458" stroke="var(--axis)" stroke-width="2" marker-end="url(#fwc-arrow)" />
+
+  <!-- Band 4: outcomes -->
+  <rect x="20" y="464" width="920" height="46" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
+  <text x="36" y="484" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="var(--text-muted)">OUTCOMES</text>
+  <text x="36" y="502" font-size="12" fill="var(--text-secondary)">
+    Research skills and computing identity · reproducible artifacts, reports and posters · graduate-school pathways · an AI-ready workforce
+  </text>
+</svg>
+
+<style>
+  .framework-compact-fig { min-width: 720px; }
+</style>

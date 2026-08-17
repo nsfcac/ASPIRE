@@ -30,6 +30,8 @@ const FIGURES = [
   { slug: 'recruitment-funnel', page: 'recruitment/index.html', cls: 'funnel-fig' },
   { slug: 'rubric-weights', page: 'recruitment/index.html', cls: 'rubric-fig' },
   { slug: 'evaluation-logic-model', page: 'evaluation/index.html', cls: 'eval-fig' },
+  // Print-only variant; the web page keeps the taller original.
+  { slug: 'program-framework-compact', page: 'print/framework/index.html', cls: 'framework-compact-fig' },
 ];
 
 /**

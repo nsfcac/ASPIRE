@@ -4,4 +4,4 @@ dist/
 .astro/
 .DS_Store
 npm-debug.log*
-figures/
+/figures/
