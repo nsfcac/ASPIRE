@@ -20,5 +20,5 @@ export const nav = [
   { href: '/mentors', label: 'Mentors', section: '(c)' },
   { href: '/recruitment', label: 'Recruitment & Selection', section: '(d)' },
   { href: '/evaluation', label: 'Evaluation', section: '(f)' },
-  { href: '/impacts', label: 'Broader Impacts', section: '(g), (h)' },
+  { href: '/impacts', label: 'Broader Impacts', section: '(g)' },
 ];

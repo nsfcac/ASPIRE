@@ -19,7 +19,7 @@ Built with [Astro](https://astro.build), no runtime dependencies, deployed to Gi
 | `/mentors` | (c) | The five research mentors, expertise, and mentoring records |
 | `/recruitment` | (d) | Eligibility, application materials, selection rubric, advertising plan |
 | `/evaluation` | (f) | Formative/summative evaluation, instruments, assessment schedule, CRA CERP |
-| `/impacts` | (g), (h) | Broader impacts and results from prior NSF support |
+| `/impacts` | (g) | Broader impacts of the REU Site |
 
 ## Figures
 
