@@ -8,6 +8,8 @@ export const site = {
   college: 'Whitacre College of Engineering, Department of Computer Science',
   duration: '10 weeks',
   cohortSize: 10,
+  /** Planned shared mailbox — not live until the Site is funded, so never linked as a mailto. */
+  plannedEmail: 'ASPIRE@ttu.edu',
   contactNote:
     'Applications will be received and managed through the NSF Education and Training Application (ETAP) system.',
 };
@@ -31,6 +33,7 @@ export const nav: NavItem[] = [
   { href: '/cohort', label: 'Cohort' },
   { href: '/evaluation', label: 'Evaluation', section: '(f)', hidden: true },
   { href: '/impacts', label: 'Broader Impacts', section: '(g)' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 /** What the header, footer, and page map render. */
