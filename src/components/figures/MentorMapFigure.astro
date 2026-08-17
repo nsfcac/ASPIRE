@@ -2,6 +2,8 @@
 import { mentors } from '../../data/team';
 import { projects, thrusts, thrustOf } from '../../data/projects';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const mBoxW = 244;
 const mBoxH = 62;
 const mX = 8;
@@ -18,6 +20,14 @@ const pCY = (i: number) => pTop + i * pStep + pBoxH / 2;
 
 const height = Math.max(mTop + mentors.length * mStep, pTop + projects.length * pStep) + 46;
 const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
+
+/**
+ * Both ends of the map are links — mentors to their own sites, projects to their page —
+ * and both carry tabindex="-1". role="img" on the <svg> makes the whole subtree
+ * presentational, so a screen reader never announces these; leaving them in the tab order
+ * would create focus stops with nothing to read out. They are a pointer affordance only,
+ * and every destination is also a real link in the mentor blocks further down the page.
+ */
 
 /** Every mentor index that supervises a project, so its box can carry their m-classes. */
 const mentorsOf = (pid: number) =>
@@ -100,25 +110,43 @@ const hoverCss = [...fromMentor, ...fromProject].join('');
     })
   )}
 
-  {mentors.map((m, i) => (
-    <g class={`node mnode m${i}`}>
+  {mentors.map((m, i) => {
+    // `website` is optional on the Mentor type, so fall back to a plain group.
+    const Node = m.website ? 'a' : 'g';
+    const linkAttrs = m.website
+      ? {
+          href: m.website,
+          target: '_blank',
+          rel: 'noopener',
+          tabindex: '-1',
+          'aria-label': `${m.name} — personal website (opens in a new tab)`,
+        }
+      : {};
+    return (
+    <Node class={`node mnode m${i}`} {...linkAttrs}>
       <rect class="box" x={mX} y={mTop + i * mStep} width={mBoxW} height={mBoxH} rx="9" fill="var(--surface-1)" stroke="var(--border-strong)" />
       <text x={mX + 14} y={mTop + i * mStep + 24} font-size="13" font-weight="700" fill="var(--text-primary)">{m.name}</text>
       <text x={mX + 14} y={mTop + i * mStep + 41} font-size="11" fill="var(--text-muted)">{clip(m.role, 34)}</text>
       <text x={mX + 14} y={mTop + i * mStep + 55} font-size="11" fill="var(--text-secondary)">{clip(m.expertise[0], 36)}</text>
-    </g>
-  ))}
+    </Node>
+    );
+  })}
 
   {projects.map((p, i) => {
     const t = thrusts[thrustOf(p.id)];
     return (
-      <g class={['node pnode', `p${p.id}`, ...mentorsOf(p.id).map((mi) => `m${mi}`)].join(' ')}>
+      <a
+        class={['node pnode', `p${p.id}`, ...mentorsOf(p.id).map((mi) => `m${mi}`)].join(' ')}
+        href={`${base}/projects/${p.slug}`}
+        tabindex="-1"
+        aria-label={`Project ${p.id}. ${p.title}`}
+      >
         <rect class="box" x={pX} y={pTop + i * pStep} width={pBoxW} height={pBoxH} rx="7" fill="var(--surface-1)" stroke="var(--border)" />
         <rect x={pX} y={pTop + i * pStep} width="4" height={pBoxH} rx="2" fill={t.color} />
         <text x={pX + 14} y={pTop + i * pStep + 15} font-size="11.5" font-weight="700" fill="var(--text-primary)">Project {p.id}</text>
         <text x={pX + 70} y={pTop + i * pStep + 15} font-size="11.5" fill="var(--text-secondary)">{clip(p.title, 40)}</text>
         <text x={pX + 14} y={pTop + i * pStep + 28} font-size="10.5" fill="var(--text-muted)">{t.name}</text>
-      </g>
+      </a>
     );
   })}
 
@@ -139,7 +167,8 @@ const hoverCss = [...fromMentor, ...fromProject].join('');
   /* Hover is an enhancement: the same mapping is in the figure's <desc> and in each
      mentor's "Projects in this Site" list, so nothing here is the only route to it. */
   .mentormap-fig .node, .mentormap-fig .link { transition: opacity .15s ease, stroke-width .15s ease; }
-  .mentormap-fig .mnode, .mentormap-fig .pnode { cursor: default; }
+  /* The boxes are links: mentors to their own sites, projects to their page. */
+  .mentormap-fig a { cursor: pointer; text-decoration: none; }
   /* Neutral, not brand: the figure's colors already encode thrusts, and the dimming
      carries the signal — a red outline would read as a fourth data color. */
   .mentormap-fig .mnode:hover .box,

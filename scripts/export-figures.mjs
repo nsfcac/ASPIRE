@@ -91,6 +91,12 @@ for (const fig of FIGURES) {
 
   let svg = extractSvg(html, fig.cls);
   svg = svg.replace(/\s+data-astro-cid-[\w-]+(="[^"]*")?/g, '');
+  // Some figures make their nodes links on the site, which Chrome would turn into PDF
+  // link annotations — pointing at site-relative paths that mean nothing in a standalone
+  // figure. Demote them to plain groups: same grouping, same artwork, no annotations.
+  svg = svg
+    .replace(/<a\b([^>]*)>/g, (_, attrs) => `<g${attrs.replace(/\s+(href|target|rel|tabindex|aria-label)="[^"]*"/g, '')}>`)
+    .replace(/<\/a>/g, '</g>');
   svg = resolveVars(svg, tokens);
 
   const [, w, h] = svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/).map(Number);
