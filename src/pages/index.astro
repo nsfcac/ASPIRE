@@ -164,12 +164,11 @@ const link = (h: string) => `${base}${h}`;
     <h2 id="map">How to read this site</h2>
     <div class="table-scroll">
       <table>
-        <thead><tr><th>Page</th><th>Proposal section</th><th>What you will find</th></tr></thead>
+        <thead><tr><th>Page</th><th>What you will find</th></tr></thead>
         <tbody>
           {visibleNav.slice(1).map((n) => (
             <tr>
               <td><a href={link(n.href)}><b>{n.label}</b></a></td>
-              <td>{n.section ?? '—'}</td>
               <td>
                 {n.href === '/projects' && 'All nine projects: objectives, significance, benefits to students, and week-by-week research plans.'}
                 {n.href === '/program' && 'The ten-week schedule, the full activity timetable, and student and mentor professional development.'}
