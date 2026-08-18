@@ -24,7 +24,7 @@ export const mentors: Mentor[] = [
     ],
     mentoring:
       'Mentored 50+ undergraduates through REUs, independent studies, summer research, and HPC projects. Students have advanced to graduate study and research careers and coauthored peer-reviewed publications.',
-    projects: [1, 2, 3, 4],
+    projects: [1, 2, 3, 4, 6],
     lead: 'Overall leadership and oversight of all aspects of the REU Site.',
   },
   {

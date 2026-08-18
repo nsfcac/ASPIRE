@@ -252,7 +252,7 @@ export const projects: Project[] = [
     slug: 'gpu-education-agents',
     title: 'GPU Programming Education Utilizing Cognitive Learning Theories',
     short: 'Study how AI agents grounded in learning theory can teach GPU programming abstractions without simply giving away the answer.',
-    mentors: ['Susan Mengel'],
+    mentors: ['Susan Mengel', 'Yong Chen'],
     domain: 'Computing Education',
     aiHpcBalance: 70,
     objective:
