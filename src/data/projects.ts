@@ -296,7 +296,7 @@ export const projects: Project[] = [
     slug: 'clinical-agents',
     title: 'Design of Open-Source Clinical Agents',
     short: 'Develop transparent, inspectable agents from open-weight models that help clinicians find, evaluate, and synthesize medical evidence.',
-    mentors: ['Maaz Amjad'],
+    mentors: ['Maaz Amjad', 'Susan Mengel'],
     domain: 'AI for Science & Health',
     aiHpcBalance: 85,
     objective:
@@ -348,7 +348,7 @@ export const projects: Project[] = [
     slug: 'efficient-agentic-inference',
     title: 'Efficient Agentic AI Inference',
     short: 'Investigate how agentic AI workflows can use GPU and HPC resources efficiently while balancing quality, memory, latency, energy, privacy, and cost.',
-    mentors: ['Maaz Amjad'],
+    mentors: ['Maaz Amjad', 'Tara Salman'],
     domain: 'AI Systems & Efficiency',
     aiHpcBalance: 60,
     objective:
@@ -392,7 +392,7 @@ export const projects: Project[] = [
     slug: 'prompt-injection',
     title: 'Characterizing Prompt Injection Vulnerabilities in Large Language Models',
     short: 'Run large-scale HPC evaluations to determine which LLM factors — size, family, architecture — drive resilience to prompt injection.',
-    mentors: ['Tara Salman'],
+    mentors: ['Tara Salman', 'Maaz Amjad'],
     domain: 'AI Security',
     aiHpcBalance: 75,
     objective:

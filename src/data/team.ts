@@ -35,7 +35,7 @@ export const mentors: Mentor[] = [
     expertise: ['Artificial intelligence', 'Natural language processing', 'Responsible AI'],
     mentoring:
       'Mentored 12+ undergraduates in ML, NLP, responsible AI, and software development. Students have coauthored publications at ACL, ACM, and in journals.',
-    projects: [7, 8],
+    projects: [7, 8, 9],
     lead: 'Coordinates program logistics and student recruitment.',
   },
   {
@@ -46,7 +46,7 @@ export const mentors: Mentor[] = [
     expertise: ['Information retrieval', 'Security and assurance', 'CS education'],
     mentoring:
       'Mentored undergraduate and graduate researchers. Two recent honors students presented their research at the TTU Undergraduate Research Conference.',
-    projects: [5, 6],
+    projects: [5, 6, 7],
     lead: 'Co-leads HPC training activities; serves as a role model for women in computing.',
   },
   {
@@ -57,7 +57,7 @@ export const mentors: Mentor[] = [
     expertise: ['Security and privacy in distributed AI systems', 'Secure distributed AI'],
     mentoring:
       'Mentored 5+ undergraduates through McNair, Honors, international REU, and independent studies. Students have pursued graduate study, presented research, and coauthored publications.',
-    projects: [9],
+    projects: [8, 9],
     lead: 'Serves as a role model for women in computing.',
   },
   {
