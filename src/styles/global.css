@@ -49,6 +49,8 @@
   --radius-sm: 6px;
   --maxw: 69.3rem; /* ~1248px at the 18px root — holds the container width steady */
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 24px rgba(0, 0, 0, 0.05);
+  /* Edge shading that appears only when a wide table or figure is scrolled. */
+  --scroll-shade: rgba(0, 0, 0, 0.14);
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-serif: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
@@ -87,6 +89,7 @@
     --grid: #2e2e2e;
     --axis: #676767;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+    --scroll-shade: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -121,6 +124,7 @@
   --grid: #2e2e2e;
   --axis: #676767;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --scroll-shade: rgba(0, 0, 0, 0.5);
 }
 
 *,
@@ -269,6 +273,10 @@ nav.main a[aria-current="page"] { color: var(--brand-ink); background: var(--bra
 
 /* ---------- tables ---------- */
 .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+/* Row hover. Reading across a wide row (the Table 1 timetable is five columns
+   and 40-odd rows) is where a tint earns its keep. */
+tbody tr { transition: background-color 0.12s ease; }
+tbody tr:hover { background: var(--surface-2); }
 table { border-collapse: collapse; width: 100%; font-size: 0.9rem; background: var(--surface-1); }
 th, td { text-align: left; padding: 0.65rem 0.85rem; border-bottom: 1px solid var(--border); vertical-align: top; }
 thead th { background: var(--surface-2); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); font-weight: 700; position: sticky; top: 0; }
@@ -299,6 +307,60 @@ details.data-table { margin-top: 0.75rem; font-size: 0.85rem; }
 details.data-table summary { cursor: pointer; color: var(--text-muted); }
 details.data-table[open] summary { margin-bottom: 0.6rem; }
 
+/* ---------- motion & interaction ----------
+   Every rule here is an enhancement over a page that already reads correctly
+   without it. Two constraints shape the section:
+
+   1. scripts/export-figures.mjs lifts the bare <svg> out of the built HTML with
+      no stylesheet attached, so nothing a figure looks like at rest may live
+      here — only hover, focus and reveal states.
+   2. The reveal is gated on html.js (set by the inline script in Base.astro), so
+      a reader without JavaScript is never left with a figure stuck at opacity 0.
+*/
+
+/* Wide tables and figures scroll sideways. The two `local` gradients paint the
+   surface color over each edge and travel with the content; the two `scroll`
+   radial gradients stay put, so a shadow shows exactly on the side that still
+   has content off-screen. */
+.table-scroll,
+figure.fig > .fig-body {
+  background:
+    linear-gradient(to right, var(--surface-1) 30%, transparent) 0 0 / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--surface-1) 30%, transparent) 100% 0 / 2.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--scroll-shade), transparent) 0 0 / 0.8rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--scroll-shade), transparent) 100% 0 / 0.8rem 100% no-repeat scroll;
+}
+
+/* Figures and tables rise into place once, as they come into view. */
+html.js figure.fig,
+html.js .table-scroll {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 0.7, 0.28, 1);
+}
+html.js figure.fig.in-view,
+html.js .table-scroll.in-view { opacity: 1; transform: none; }
+
+/* The shared figure highlight: mark the parts of a figure that can be picked out
+   individually with class "hl", and hovering one dims its siblings. Each figure
+   layers its own accents (an outline, a link, a tooltip) on top of this.
+   MentorMapFigure keeps its own generated rules — a bipartite map has to
+   correlate the two ends, which this cannot express. */
+figure.fig svg .hl { transition: opacity 0.18s ease; }
+figure.fig svg:has(.hl:hover) .hl:not(:hover) { opacity: 0.25; }
+figure.fig svg a { cursor: pointer; text-decoration: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.js figure.fig,
+  html.js .table-scroll { opacity: 1; transform: none; transition: none; }
+  figure.fig svg .hl,
+  tbody tr,
+  .card-link { transition: none; }
+  .card-link:hover { transform: none; }
+  figure.fig svg .flow { animation: none; }
+}
+
 /* ---------- footer ---------- */
 .site-footer {
   margin-top: 4rem; border-top: 1px solid var(--border);
@@ -316,4 +378,6 @@ details.data-table[open] summary { margin-bottom: 0.6rem; }
 @media print {
   .site-header, .site-footer, .theme-toggle { display: none; }
   body { background: #fff; }
+  /* A figure that has not been scrolled past yet must still print. */
+  figure.fig, .table-scroll { opacity: 1 !important; transform: none !important; }
 }

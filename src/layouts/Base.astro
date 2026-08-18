@@ -34,6 +34,41 @@ const pageTitle = title === site.acronym ? `${site.acronym} — NSF REU Site` : 
           const t = localStorage.getItem('aspire-theme');
           if (t) document.documentElement.setAttribute('data-theme', t);
         } catch (e) {}
+
+        /* Marks the document as scripted. The reveal styles hang off html.js, so
+           without this line — no JavaScript, or this script failing — figures and
+           tables simply render, rather than waiting for an observer that never
+           arrives. Inline and in <head> so the class is set before first paint. */
+        const root = document.documentElement;
+        root.classList.add('js');
+
+        const reveal = () => {
+          const targets = document.querySelectorAll('figure.fig, .table-scroll');
+          const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (still || !('IntersectionObserver' in window)) {
+            targets.forEach((el) => el.classList.add('in-view'));
+            return;
+          }
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const e of entries) {
+                if (!e.isIntersecting) continue;
+                e.target.classList.add('in-view');
+                io.unobserve(e.target); /* one-way: no fade-out on the way back up */
+              }
+            },
+            /* Held back until the element is a little way inside the viewport, so
+               the movement reads as arriving rather than as a jitter at the edge. */
+            { rootMargin: '0px 0px -12% 0px' }
+          );
+          targets.forEach((el) => io.observe(el));
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', reveal);
+        } else {
+          reveal();
+        }
       })();
     </script>
   </head>
