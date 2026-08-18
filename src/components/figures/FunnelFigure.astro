@@ -80,11 +80,19 @@ const cx = 214;
   {stages.map((s, i) => {
     const y = top + i * rowH;
     return (
-      <g>
-        <rect x={cx - s.width / 2} y={y} width={s.width} height="44" rx="6" fill={s.fill} />
-        <text x={cx} y={y + 28} font-size={s.width < 200 ? 12 : 13} font-weight="700" text-anchor="middle" fill={s.ink}>
-          {s.label}
-        </text>
+      /* One stage = its funnel bar plus the detail column on its right. Marked .hl
+         so hovering either half dims the other five stages and leaves one stage of
+         the process on screen by itself. */
+      <g class="hl">
+        {/* Unpainted at rest — it only widens the hover target to the whole band. */}
+        <rect class="hit" x="0" y={y - 8} width="960" height={rowH} fill="none" pointer-events="all" />
+        {/* Bar and label share a group so the hover scale moves them together. */}
+        <g class="bar">
+          <rect x={cx - s.width / 2} y={y} width={s.width} height="44" rx="6" fill={s.fill} />
+          <text x={cx} y={y + 28} font-size={s.width < 200 ? 12 : 13} font-weight="700" text-anchor="middle" fill={s.ink}>
+            {s.label}
+          </text>
+        </g>
         {i < stages.length - 1 && (
           <path d={`M${cx - 7} ${y + 48} L${cx + 7} ${y + 48} L${cx} ${y + 60} z`} fill="var(--axis)" />
         )}
@@ -101,4 +109,13 @@ const cx = 214;
 
 <style>
   .funnel-fig { min-width: 860px; }
+  /* The bar of the hovered stage lifts slightly out of the funnel toward its
+     detail column. transform-box keeps the origin in the bar's own box rather
+     than the SVG's, which is what makes a plain `scale` behave here. */
+  .funnel-fig .bar { transform-box: fill-box; transform-origin: center; transition: transform 0.18s ease; }
+  .funnel-fig .hl:hover .bar { transform: scale(1.03); }
+  @media (prefers-reduced-motion: reduce) {
+    .funnel-fig .bar { transition: none; }
+    .funnel-fig .hl:hover .bar { transform: none; }
+  }
 </style>

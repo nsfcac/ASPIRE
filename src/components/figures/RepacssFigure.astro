@@ -21,13 +21,15 @@ const cpuMem = 110 * 1.5;
   </defs>
 
   <!-- student side -->
-  <rect x="8" y="114" width="142" height="130" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
-  <text x="22" y="138" font-size="13" font-weight="700" fill="var(--text-primary)">REU student</text>
-  <text x="22" y="160" font-size="11" fill="var(--text-secondary)">Dedicated workspace</text>
-  <text x="22" y="176" font-size="11" fill="var(--text-secondary)">and computer in the</text>
-  <text x="22" y="192" font-size="11" fill="var(--text-secondary)">mentor’s lab, alongside</text>
-  <text x="22" y="208" font-size="11" fill="var(--text-secondary)">postdoctoral and</text>
-  <text x="22" y="224" font-size="11" fill="var(--text-secondary)">graduate researchers</text>
+  <g class="hl">
+    <rect x="8" y="114" width="142" height="130" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
+    <text x="22" y="138" font-size="13" font-weight="700" fill="var(--text-primary)">REU student</text>
+    <text x="22" y="160" font-size="11" fill="var(--text-secondary)">Dedicated workspace</text>
+    <text x="22" y="176" font-size="11" fill="var(--text-secondary)">and computer in the</text>
+    <text x="22" y="192" font-size="11" fill="var(--text-secondary)">mentor’s lab, alongside</text>
+    <text x="22" y="208" font-size="11" fill="var(--text-secondary)">postdoctoral and</text>
+    <text x="22" y="224" font-size="11" fill="var(--text-secondary)">graduate researchers</text>
+  </g>
 
   <path d="M156 179 L246 179" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
   <text x="198" y="170" font-size="10.5" text-anchor="middle" fill="var(--text-muted)">secure</text>
@@ -38,46 +40,56 @@ const cpuMem = 110 * 1.5;
   <text x="268" y="52" font-size="12" font-weight="700" letter-spacing="1.1" fill="var(--text-muted)">REPACSS — TEXAS TECH ADVANCED HPC AND AI PLATFORM</text>
 
   <!-- login + scheduler -->
-  <rect x="268" y="126" width="132" height="106" rx="10" fill="var(--surface-1)" stroke="var(--border)" />
-  <text x="334" y="152" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Login nodes</text>
-  <text x="334" y="172" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">Linux environment</text>
-  <text x="334" y="188" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">software modules</text>
-  <text x="334" y="212" font-size="11.5" text-anchor="middle" font-family="var(--font-mono)" fill="var(--text-muted)">Slurm sbatch</text>
+  <g class="hl">
+    <rect x="268" y="126" width="132" height="106" rx="10" fill="var(--surface-1)" stroke="var(--border)" />
+    <text x="334" y="152" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Login nodes</text>
+    <text x="334" y="172" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">Linux environment</text>
+    <text x="334" y="188" font-size="11.5" text-anchor="middle" fill="var(--text-secondary)">software modules</text>
+    <text x="334" y="212" font-size="11.5" text-anchor="middle" font-family="var(--font-mono)" fill="var(--text-muted)">Slurm sbatch</text>
+  </g>
 
   <path d="M404 179 L444 179" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
 
-  <rect x="448" y="126" width="118" height="106" rx="10" fill="var(--surface-3)" stroke="var(--border-strong)" />
-  <text x="507" y="158" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Slurm</text>
-  <text x="507" y="176" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">scheduler</text>
-  <text x="507" y="198" font-size="11" text-anchor="middle" fill="var(--text-secondary)">queues, allocation,</text>
-  <text x="507" y="213" font-size="11" text-anchor="middle" fill="var(--text-secondary)">job accounting</text>
+  <g class="hl">
+    <rect x="448" y="126" width="118" height="106" rx="10" fill="var(--surface-3)" stroke="var(--border-strong)" />
+    <text x="507" y="158" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">Slurm</text>
+    <text x="507" y="176" font-size="13" font-weight="700" text-anchor="middle" fill="var(--text-primary)">scheduler</text>
+    <text x="507" y="198" font-size="11" text-anchor="middle" fill="var(--text-secondary)">queues, allocation,</text>
+    <text x="507" y="213" font-size="11" text-anchor="middle" fill="var(--text-secondary)">job accounting</text>
+  </g>
 
   <path d="M570 160 L610 116" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
   <path d="M570 200 L610 244" stroke="var(--axis)" stroke-width="2" marker-end="url(#rp-arrow)" />
 
   <!-- CPU partition -->
-  <rect x="614" y="56" width="322" height="106" rx="10" fill="var(--c-1-soft)" stroke="var(--c-1)" stroke-width="2" />
-  <text x="632" y="82" font-size="13.5" font-weight="700" fill="var(--text-primary)">CPU partition</text>
-  <text x="632" y="104" font-size="12" fill="var(--text-secondary)">110 compute nodes · 256 AMD EPYC cores/node</text>
-  <text x="632" y="122" font-size="12" fill="var(--text-secondary)">1.5 TB memory per node</text>
-  <text x="632" y="146" font-size="11.5" font-weight="600" fill="var(--text-muted)">≈ {cpuCores.toLocaleString()} cores · ≈ {cpuMem.toLocaleString()} TB aggregate memory</text>
+  <g class="hl">
+    <rect x="614" y="56" width="322" height="106" rx="10" fill="var(--c-1-soft)" stroke="var(--c-1)" stroke-width="2" />
+    <text x="632" y="82" font-size="13.5" font-weight="700" fill="var(--text-primary)">CPU partition</text>
+    <text x="632" y="104" font-size="12" fill="var(--text-secondary)">110 compute nodes · 256 AMD EPYC cores/node</text>
+    <text x="632" y="122" font-size="12" fill="var(--text-secondary)">1.5 TB memory per node</text>
+    <text x="632" y="146" font-size="11.5" font-weight="600" fill="var(--text-muted)">≈ {cpuCores.toLocaleString()} cores · ≈ {cpuMem.toLocaleString()} TB aggregate memory</text>
+  </g>
 
   <!-- GPU partition -->
-  <rect x="614" y="196" width="322" height="106" rx="10" fill="var(--c-2-soft)" stroke="var(--c-2)" stroke-width="2" />
-  <text x="632" y="222" font-size="13.5" font-weight="700" fill="var(--text-primary)">GPU partition</text>
-  <text x="632" y="244" font-size="12" fill="var(--text-secondary)">8 GPU nodes · 32 NVIDIA H100 NVL GPUs</text>
-  <text x="632" y="262" font-size="12" fill="var(--text-secondary)">model training, fine-tuning and inference</text>
-  <text x="632" y="286" font-size="11.5" font-weight="600" fill="var(--text-muted)">4 GPUs per node</text>
+  <g class="hl">
+    <rect x="614" y="196" width="322" height="106" rx="10" fill="var(--c-2-soft)" stroke="var(--c-2)" stroke-width="2" />
+    <text x="632" y="222" font-size="13.5" font-weight="700" fill="var(--text-primary)">GPU partition</text>
+    <text x="632" y="244" font-size="12" fill="var(--text-secondary)">8 GPU nodes · 32 NVIDIA H100 NVL GPUs</text>
+    <text x="632" y="262" font-size="12" fill="var(--text-secondary)">model training, fine-tuning and inference</text>
+    <text x="632" y="286" font-size="11.5" font-weight="600" fill="var(--text-muted)">4 GPUs per node</text>
+  </g>
 
   <!-- monitoring plane -->
-  <rect x="268" y="256" width="298" height="86" rx="10" fill="var(--surface-1)" stroke="var(--border)" />
-  <text x="286" y="280" font-size="13" font-weight="700" fill="var(--text-primary)">Monitoring &amp; power plane</text>
-  <text x="286" y="300" font-size="11.5" fill="var(--text-secondary)">node utilization · GPU activity · temperature</text>
-  <text x="286" y="316" font-size="11.5" fill="var(--text-secondary)">power draw · node state · Slurm job records</text>
-  <text x="286" y="332" font-size="11.5" fill="var(--text-secondary)">cooling and battery-backed energy supply</text>
+  <g class="hl">
+    <rect x="268" y="256" width="298" height="86" rx="10" fill="var(--surface-1)" stroke="var(--border)" />
+    <text x="286" y="280" font-size="13" font-weight="700" fill="var(--text-primary)">Monitoring &amp; power plane</text>
+    <text x="286" y="300" font-size="11.5" fill="var(--text-secondary)">node utilization · GPU activity · temperature</text>
+    <text x="286" y="316" font-size="11.5" fill="var(--text-secondary)">power draw · node state · Slurm job records</text>
+    <text x="286" y="332" font-size="11.5" fill="var(--text-secondary)">cooling and battery-backed energy supply</text>
+  </g>
 
-  <path d="M700 306 L700 322 L570 322" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#rp-arrow)" fill="none" />
-  <path d="M700 166 L590 166 L590 300 L570 300" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#rp-arrow)" fill="none" />
+  <path class="flow" d="M700 306 L700 322 L570 322" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#rp-arrow)" fill="none" />
+  <path class="flow" d="M700 166 L590 166 L590 300 L570 300" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#rp-arrow)" fill="none" />
 
   <!-- project usage band -->
   <rect x="8" y="380" width="944" height="80" rx="10" fill="var(--surface-2)" stroke="var(--border)" />
@@ -93,4 +105,24 @@ const cpuMem = 110 * 1.5;
 
 <style>
   .repacss-fig { min-width: 820px; }
+
+  /* The two dashed paths carry telemetry from the partitions back to the monitoring
+     plane, and are the one thing in this figure that is genuinely in motion. The
+     dashes crawl along them at reading pace. The dasharray stays an attribute, so
+     the exported figure keeps the same dashed line, just still. */
+  .repacss-fig .flow { animation: rp-flow 1.6s linear infinite; }
+  @keyframes rp-flow { to { stroke-dashoffset: -14; } }
+
+  /* Hovering a box lifts it, labels and all — the transform is on the group, so the
+     text travels with its box. The shared .hl rule dims the rest of the path. */
+  .repacss-fig .hl { transition: transform 0.18s ease; }
+  .repacss-fig .hl:hover { transform: translateY(-2px); }
+  .repacss-fig .hl rect { transition: stroke 0.18s ease; }
+  .repacss-fig .hl:hover rect { stroke: var(--border-strong); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .repacss-fig .flow { animation: none; }
+    .repacss-fig .hl, .repacss-fig .hl rect { transition: none; }
+    .repacss-fig .hl:hover { transform: none; }
+  }
 </style>

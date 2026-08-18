@@ -10,6 +10,32 @@ const top = 40;
 const height = top + rubric.length * rowH + 26;
 const scale = (v: number) => (v / max) * plotW;
 const ticks = [0, 10, 20, 30];
+
+/**
+ * The bars draw themselves in when the figure scrolls into view, one after the
+ * next. Two reasons this is emitted as global CSS rather than a scoped <style>:
+ * the stagger is a delay per row, which plain CSS cannot count out, and the
+ * trigger is .in-view on the surrounding <figure> — an element that belongs to
+ * Figure.astro, so Astro's scoping would rewrite it into a selector that never
+ * matches. The selectors are namespaced under .rubric-fig instead.
+ *
+ * Grown from the axis, not the middle: a bar chart scaling from its center would
+ * read as a different measurement on the way in. Nothing here touches the resting
+ * figure — scripts/export-figures.mjs takes the <svg> with no stylesheet, so the
+ * exported bars are full width already.
+ */
+const growCss = `
+html.js .rubric-fig .bar {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.7s cubic-bezier(0.22, 0.7, 0.28, 1);
+}
+html.js figure.fig.in-view .rubric-fig .bar { transform: scaleX(1); }
+${rubric.map((_, i) => `html.js .rubric-fig .bar${i} { transition-delay: ${(i * 0.08).toFixed(2)}s; }`).join('\n')}
+@media (prefers-reduced-motion: reduce) {
+  html.js .rubric-fig .bar { transform: none; transition: none; }
+}`;
 ---
 
 <svg viewBox={`0 0 880 ${height}`} role="img" aria-labelledby="rb-title rb-desc" class="rubric-fig">
@@ -30,10 +56,13 @@ const ticks = [0, 10, 20, 30];
     const y = top + i * rowH;
     const w = scale(r.weight);
     return (
-      <g>
+      <g class="hl">
+        {/* Unpainted at rest; it makes the whole row, label included, hoverable. */}
+        <rect class="hit" x="0" y={y - 6} width="880" height={rowH} fill="none" pointer-events="all" />
+        <title>{`${r.criterion} — ${r.weight}% · ${r.evidence}`}</title>
         <text x={labelW} y={y + 14} font-size="12.5" font-weight="600" text-anchor="end" fill="var(--text-primary)">{r.criterion}</text>
         <text x={labelW} y={y + 30} font-size="11" text-anchor="end" fill="var(--text-muted)">{r.evidence}</text>
-        <rect x={x0} y={y + 2} width={w} height="22" rx="4" fill={r.weight === 25 ? 'var(--ord-3)' : 'var(--ord-2)'} />
+        <rect class={`bar bar${i}`} x={x0} y={y + 2} width={w} height="22" rx="4" fill={r.weight === 25 ? 'var(--ord-3)' : 'var(--ord-2)'} />
         <text x={x0 + w + 10} y={y + 18} font-size="12.5" font-weight="700" fill="var(--text-primary)">{r.weight}%</text>
       </g>
     );
@@ -44,6 +73,8 @@ const ticks = [0, 10, 20, 30];
     Weights sum to 100%. Each application is scored against a “meets” and an “exceeds” descriptor for every criterion.
   </text>
 </svg>
+
+<style is:global set:html={growCss}></style>
 
 <style>
   .rubric-fig { min-width: 620px; }

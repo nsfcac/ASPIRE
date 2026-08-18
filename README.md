@@ -46,6 +46,25 @@ A print-only variant of the framework figure lives in
 `/print/framework`. It carries the same content in a canvas ~30% shorter (960×520 vs 960×736) by
 flattening the Venn circles into ellipses. The website keeps the original.
 
+### Interaction
+
+Figures and tables carry a thin enhancement layer, all of it optional:
+
+- **Reveal on scroll** — figures and tables rise into place as they enter the viewport.
+- **Highlight on hover** — hovering one part of a figure dims the rest: a thrust card, a project
+  row, a funnel stage, a week column in the ten-week grid, a logic-model stage, a REPACSS box, a
+  mentor or a project in the mentor–project map.
+- **Links inside figures** — the project lines in the framework figure, the rows of the phase map,
+  and both ends of the mentor–project map open the page they name.
+- **Tooltips** — the timetable codes (A5.1 …), phase bars, and rubric rows spell themselves out.
+- **Scroll shading** — a wide table or figure shades the edge that still has content off-screen.
+- **Row hover** on every table.
+
+Two rules keep this from leaking into the proposal or excluding readers. Nothing a figure looks
+like at rest may live in CSS, because the export below drops the stylesheet; and everything is
+either gated on `html.js` or switched off under `prefers-reduced-motion: reduce`, so a reader
+without JavaScript, or one who asks for less motion, still gets the full static figure.
+
 ### Exporting figures for the proposal
 
 ```bash

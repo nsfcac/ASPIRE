@@ -54,15 +54,21 @@ const gap = 12;
   {cols.map((c, i) => {
     const x = 16 + i * (colW + gap);
     return (
-      <g>
-        <rect x={x} y="32" width={colW} height="150" rx="10" fill={i > 2 ? 'var(--surface-2)' : 'var(--surface-1)'} stroke="var(--border)" />
-        <rect x={x} y="32" width={colW} height="3" rx="1.5" fill={i > 2 ? 'var(--ord-3)' : 'var(--ord-2)'} />
-        <text x={x + 14} y="56" font-size="13" font-weight="700" fill="var(--text-primary)">{c.head}</text>
-        {c.items.map((it, j) => (
-          <text x={x + 14} y={78 + j * 20} font-size="11.5" fill="var(--text-secondary)">
-            <tspan fill="var(--axis)">›</tspan> {it}
-          </text>
-        ))}
+      /* Hovering one stage of the logic model dims the rest, so a reader can follow
+         inputs → activities → outputs → outcomes one column at a time. */
+      <g class="hl col">
+        {/* The card lifts on hover; the arrow to the next column stays put, so the
+            chain between stages does not wobble. */}
+        <g class="card">
+          <rect class="cardbox" x={x} y="32" width={colW} height="150" rx="10" fill={i > 2 ? 'var(--surface-2)' : 'var(--surface-1)'} stroke="var(--border)" />
+          <rect x={x} y="32" width={colW} height="3" rx="1.5" fill={i > 2 ? 'var(--ord-3)' : 'var(--ord-2)'} />
+          <text x={x + 14} y="56" font-size="13" font-weight="700" fill="var(--text-primary)">{c.head}</text>
+          {c.items.map((it, j) => (
+            <text x={x + 14} y={78 + j * 20} font-size="11.5" fill="var(--text-secondary)">
+              <tspan fill="var(--axis)">›</tspan> {it}
+            </text>
+          ))}
+        </g>
         {i < cols.length - 1 && (
           <path d={`M${x + colW + 1} 107 L${x + colW + gap - 2} 107`} stroke="var(--axis)" stroke-width="2" marker-end="url(#ev-arrow)" />
         )}
@@ -74,8 +80,14 @@ const gap = 12;
 
   <line x1="40" y1="262" x2="920" y2="262" stroke="var(--border-strong)" stroke-width="2" />
   {points.map((p) => (
-    <g>
-      <circle cx={p.x} cy="262" r="6.5" fill={p.kind === 'formative' ? 'var(--ord-2)' : 'var(--ord-3)'} stroke="var(--surface-1)" stroke-width="2.5" />
+    <g class="point">
+      {/* Not marked .hl: the shared dim rule works across a whole figure, and dimming
+          the logic model while reading the schedule below it helps nobody. The point
+          gets its own accent instead. */}
+      {/* Unpainted at rest; it widens the hover target from the dot to the whole
+          column of labels beneath it. */}
+      <rect class="hit" x={p.x - 88} y="248" width="176" height="130" fill="none" pointer-events="all" />
+      <circle class="dot" cx={p.x} cy="262" r="6.5" fill={p.kind === 'formative' ? 'var(--ord-2)' : 'var(--ord-3)'} stroke="var(--surface-1)" stroke-width="2.5" />
       <line x1={p.x} y1="270" x2={p.x} y2="286" stroke="var(--grid)" stroke-width="1.5" />
       <text x={p.x} y="302" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--text-primary)">{p.label}</text>
       <text x={p.x} y="318" font-size="11" text-anchor="middle" fill="var(--text-muted)">{p.when}</text>
@@ -105,4 +117,16 @@ const gap = 12;
 
 <style>
   .eval-fig { min-width: 880px; }
+  /* A plain translate needs no origin; the dot's scale does, and transform-box
+     keeps that origin in the circle's own box rather than the SVG's. */
+  .eval-fig .card { transition: transform 0.18s ease; }
+  .eval-fig .col:hover .card { transform: translateY(-3px); }
+  .eval-fig .cardbox { transition: stroke 0.18s ease; }
+  .eval-fig .col:hover .cardbox { stroke: var(--border-strong); }
+  .eval-fig .dot { transform-box: fill-box; transform-origin: center; transition: transform 0.18s ease; }
+  .eval-fig .point:hover .dot { transform: scale(1.35); }
+  @media (prefers-reduced-motion: reduce) {
+    .eval-fig .card, .eval-fig .cardbox, .eval-fig .dot { transition: none; }
+    .eval-fig .col:hover .card, .eval-fig .point:hover .dot { transform: none; }
+  }
 </style>

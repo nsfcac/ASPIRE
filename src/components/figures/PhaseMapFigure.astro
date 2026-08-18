@@ -1,6 +1,8 @@
 ---
 import { projects, thrusts, thrustOf } from '../../data/projects';
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const labelW = 330;
 const x0 = labelW + 10;
 const cellW = 60;
@@ -10,6 +12,12 @@ const height = top + projects.length * rowH + 34;
 const ordinal = ['var(--ord-1)', 'var(--ord-2)', 'var(--ord-3)', 'var(--ord-4)'];
 const ink = ['#0b1c30', '#ffffff', '#ffffff', '#ffffff'];
 const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s);
+
+/**
+ * Each row links to its project page and carries tabindex="-1": role="img" on the
+ * <svg> makes the whole subtree presentational, so a focus stop here would have
+ * nothing to announce. Every row is also a real link in the project index below.
+ */
 ---
 
 <svg viewBox={`0 0 960 ${height}`} role="img" aria-labelledby="pm-title pm-desc" class="phasemap-fig">
@@ -31,11 +39,14 @@ const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd
     const t = thrusts[thrustOf(p.id)];
     const y = top + i * rowH;
     return (
-      <g>
+      <a class="hl row" href={`${base}/projects/${p.slug}`} tabindex="-1" aria-label={`Project ${p.id}. ${p.title}`}>
         {i % 2 === 1 && <rect x="0" y={y - 2} width="960" height={rowH - 2} fill="var(--surface-2)" opacity="0.55" />}
+        {/* Unpainted at rest, so the exported figure is unchanged; it exists to make
+            the whole band — not just the bars — a hover and click target. */}
+        <rect class="rowhit" x="0" y={y - 2} width="960" height={rowH - 2} fill="none" pointer-events="all" />
         <rect x="0" y={y + 4} width="4" height="20" rx="2" fill={t.color} />
         <text x="14" y={y + 14} font-size="11.5" font-weight="700" fill="var(--text-primary)">Project {p.id}</text>
-        <text x="72" y={y + 14} font-size="11.5" fill="var(--text-secondary)">{clip(p.title, 40)}</text>
+        <text class="ptitle" x="72" y={y + 14} font-size="11.5" fill="var(--text-secondary)">{clip(p.title, 40)}</text>
         <text x="14" y={y + 27} font-size="10.5" fill="var(--text-muted)">{t.name} · {p.mentors.join(', ')}</text>
 
         {p.phases.map((ph, j) => {
@@ -43,6 +54,7 @@ const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd
           const w = (ph.weekEnd - ph.weekStart + 1) * cellW - 5;
           return (
             <g>
+              <title>{`${ph.label} · ${ph.weeks} — ${ph.title}`}</title>
               <rect x={x} y={y + 3} width={w} height="22" rx="4" fill={ordinal[j]} />
               <text x={x + w / 2} y={y + 18} font-size="10.5" font-weight="600" text-anchor="middle" fill={ink[j]}>
                 {w > 92 ? clip(ph.title, Math.floor(w / 6.1)) : ph.label.replace('Phase ', 'P')}
@@ -50,7 +62,7 @@ const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd
             </g>
           );
         })}
-      </g>
+      </a>
     );
   })}
 
@@ -66,4 +78,13 @@ const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1).trimEnd
 
 <style>
   .phasemap-fig { min-width: 880px; }
+  /* Sibling rows dim through the shared .hl rule; the hovered row also picks up a
+     band tint and a stronger title, so the row reads as one object. */
+  /* transparent, not the attribute's `none`, so the tint can fade in. */
+  .phasemap-fig .rowhit { fill: transparent; transition: fill 0.15s ease; }
+  .phasemap-fig .row:hover .rowhit { fill: var(--surface-3); }
+  .phasemap-fig .row:hover .ptitle { fill: var(--text-primary); }
+  @media (prefers-reduced-motion: reduce) {
+    .phasemap-fig .rowhit { transition: none; }
+  }
 </style>
