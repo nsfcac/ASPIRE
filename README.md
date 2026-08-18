@@ -48,9 +48,12 @@ flattening the Venn circles into ellipses. The website keeps the original.
 
 ### Interaction
 
-Figures and tables carry a thin enhancement layer, all of it optional:
+Figures, tables and cards carry a thin enhancement layer, all of it optional:
 
-- **Reveal on scroll** — figures and tables rise into place as they enter the viewport.
+- **Reveal on scroll** — figures, tables and cards rise into place as they enter the viewport;
+  cards in the same row arrive a beat apart, offset by their position in the grid.
+- **Card hover** — every card and stat tile strengthens its border and picks up a shadow; the cards
+  that are links (the project cards) also lift, and a cohort portrait zooms slightly inside its frame.
 - **Highlight on hover** — hovering one part of a figure dims the rest: a thrust card, a project
   row, a funnel stage, a week column in the ten-week grid, a logic-model stage, a REPACSS box, a
   mentor or a project in the mentor–project map.
@@ -63,7 +66,11 @@ Figures and tables carry a thin enhancement layer, all of it optional:
 Two rules keep this from leaking into the proposal or excluding readers. Nothing a figure looks
 like at rest may live in CSS, because the export below drops the stylesheet; and everything is
 either gated on `html.js` or switched off under `prefers-reduced-motion: reduce`, so a reader
-without JavaScript, or one who asks for less motion, still gets the full static figure.
+without JavaScript, or one who asks for less motion, still gets the full static page.
+
+One consequence worth knowing when editing a figure: `.card`, `.stat` and `.person` are site
+component classes that the reveal keys off, so a figure's SVG must not reuse those names for its
+own parts.
 
 ### Exporting figures for the proposal
 

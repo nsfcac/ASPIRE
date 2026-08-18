@@ -105,7 +105,7 @@ const drivers = [
          place on the site where all nine projects sit side by side, and three at a
          time is the readable unit. */
       <g class="hl">
-        <rect class="card" x={x} y={cardY} width={colW} height={cardH} rx="10" fill="var(--surface-1)" stroke="var(--border)" />
+        <rect class="thrustbox" x={x} y={cardY} width={colW} height={cardH} rx="10" fill="var(--surface-1)" stroke="var(--border)" />
         <rect x={x} y={cardY} width={colW} height="4" rx="2" fill={t.color} />
         <text x={x + 16} y={cardY + 30} font-size="14.5" font-weight="700" fill="var(--text-primary)">{t.name}</text>
         {t.projects.map((pid, j) => {
@@ -140,13 +140,13 @@ const drivers = [
 
 <style>
   .framework-fig { min-width: 720px; }
-  .framework-fig .card { transition: stroke 0.18s ease; }
-  .framework-fig .hl:hover .card { stroke: var(--border-strong); }
+  .framework-fig .thrustbox { transition: stroke 0.18s ease; }
+  .framework-fig .hl:hover .thrustbox { stroke: var(--border-strong); }
   /* transparent, not the attribute's `none`, so the row tint can fade. */
   .framework-fig .hit { fill: transparent; transition: fill 0.15s ease; }
   .framework-fig .chip:hover .hit { fill: var(--surface-2); }
   .framework-fig .chip:hover .ct { fill: var(--text-primary); }
   @media (prefers-reduced-motion: reduce) {
-    .framework-fig .card, .framework-fig .hit { transition: none; }
+    .framework-fig .thrustbox, .framework-fig .hit { transition: none; }
   }
 </style>

@@ -43,7 +43,17 @@ const pageTitle = title === site.acronym ? `${site.acronym} — NSF REU Site` : 
         root.classList.add('js');
 
         const reveal = () => {
-          const targets = document.querySelectorAll('figure.fig, .table-scroll');
+          const targets = document.querySelectorAll('figure.fig, .table-scroll, .card, .stat, .person');
+
+          /* Cards in the same row cross the threshold together, so each one is
+             offset by its place in its grid. Capped, or the tail of a long grid
+             would still be arriving well after the reader got there. */
+          for (const el of targets) {
+            if (!el.classList.contains('card') && !el.classList.contains('stat') && !el.classList.contains('person')) continue;
+            const i = [].indexOf.call(el.parentElement.children, el);
+            el.style.setProperty('--rise-delay', Math.min(i, 7) * 55 + 'ms');
+          }
+
           const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (still || !('IntersectionObserver' in window)) {
             targets.forEach((el) => el.classList.add('in-view'));

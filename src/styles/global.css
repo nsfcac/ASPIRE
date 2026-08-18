@@ -241,8 +241,14 @@ nav.main a[aria-current="page"] { color: var(--brand-ink); background: var(--bra
   padding: 1.25rem 1.35rem;
 }
 .card h3 { margin-top: 0; }
-.card-link { text-decoration: none; color: inherit; display: block; transition: border-color .15s ease, transform .15s ease; }
-.card-link:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+/* One transition list for every card state — the lift, the border and the shadow
+   all ride on it, and so does the tail of the reveal below. */
+.card, .stat { transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.3s cubic-bezier(0.22, 0.7, 0.28, 1); }
+.card:hover, .stat:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+.card-link { text-decoration: none; color: inherit; display: block; }
+/* Only the cards that are links lift: on a card you cannot click, a lift would
+   promise something that is not there. */
+.card-link:hover { transform: translateY(-2px); }
 
 .callout {
   border-left: 3px solid var(--brand);
@@ -331,6 +337,30 @@ figure.fig > .fig-body {
     radial-gradient(farthest-side at 100% 50%, var(--scroll-shade), transparent) 100% 0 / 0.8rem 100% no-repeat scroll;
 }
 
+/* Cards rise as they arrive, a beat apart across a row. An animation rather than a
+   transition, because the stagger needs a delay and a lingering transition-delay
+   would make every later hover feel slow. `backwards` fill holds the card at the
+   first keyframe through that delay and then lets go entirely, so the hover
+   transform above is free the moment the card has landed.
+
+   `.card`, `.stat` and `.person` are site component classes that these rules key
+   off: a figure's SVG must not borrow those names for its own parts, or its
+   innards would hide until scrolled into view and lift on hover with the cards. */
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+html.js .card:not(.in-view),
+html.js .stat:not(.in-view),
+html.js .person:not(.in-view) { opacity: 0; }
+html.js .card.in-view,
+html.js .stat.in-view,
+html.js .person.in-view {
+  /* --rise-delay is set per card by the observer in Base.astro, from the card's
+     place in its grid; a lone card outside a grid falls back to no delay. */
+  animation: card-rise 0.5s cubic-bezier(0.22, 0.7, 0.28, 1) var(--rise-delay, 0ms) backwards;
+}
+
 /* Figures and tables rise into place once, as they come into view. */
 html.js figure.fig,
 html.js .table-scroll {
@@ -354,9 +384,16 @@ figure.fig svg a { cursor: pointer; text-decoration: none; }
   html { scroll-behavior: auto; }
   html.js figure.fig,
   html.js .table-scroll { opacity: 1; transform: none; transition: none; }
+  html.js .card:not(.in-view),
+  html.js .stat:not(.in-view),
+  html.js .person:not(.in-view) { opacity: 1; }
+  html.js .card.in-view,
+  html.js .stat.in-view,
+  html.js .person.in-view { animation: none; }
   figure.fig svg .hl,
   tbody tr,
-  .card-link { transition: none; }
+  .card,
+  .stat { transition: border-color 0.18s ease, box-shadow 0.18s ease; }
   .card-link:hover { transform: none; }
   figure.fig svg .flow { animation: none; }
 }
@@ -378,6 +415,8 @@ figure.fig svg a { cursor: pointer; text-decoration: none; }
 @media print {
   .site-header, .site-footer, .theme-toggle { display: none; }
   body { background: #fff; }
-  /* A figure that has not been scrolled past yet must still print. */
-  figure.fig, .table-scroll { opacity: 1 !important; transform: none !important; }
+  /* A figure or card that has not been scrolled past yet must still print. */
+  figure.fig, .table-scroll, .card, .stat, .person {
+    opacity: 1 !important; transform: none !important; animation: none !important;
+  }
 }
