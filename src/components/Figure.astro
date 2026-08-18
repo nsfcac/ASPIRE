@@ -3,11 +3,18 @@ interface Props {
   id?: string;
   title: string;
   caption?: string;
+  /**
+   * Note for figures that respond to the pointer. Deliberately not part of the caption:
+   * captions are mirrored into the proposal, where the figure is a static image. Hidden
+   * on touch and other hover-less inputs, where the advice would not apply.
+   */
+  hint?: string;
 }
-const { id, title, caption } = Astro.props;
+const { id, title, caption, hint } = Astro.props;
 ---
 
 <figure class="fig" id={id}>
+  {hint && <p class="fig-hint">{hint}</p>}
   <div class="fig-body">
     <slot />
   </div>
@@ -16,3 +23,16 @@ const { id, title, caption } = Astro.props;
     <slot name="caption" />
   </figcaption>
 </figure>
+
+<style>
+  .fig-hint { display: none; }
+  /* Only where a pointer can actually hover — on touch, tapping a node just follows its link. */
+  @media (hover: hover) and (pointer: fine) {
+    .fig-hint {
+      display: block;
+      margin: -0.25rem 0 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+  }
+</style>
