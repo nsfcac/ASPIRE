@@ -1,0 +1,204 @@
+---
+/**
+ * Print variant of EvaluationFigure for the proposal: same 960x480 canvas, but
+ * typed for paper. At \linewidth in a 6.5in text block the canvas scales by 0.65,
+ * so printed pt = px * 0.4875 and the website figure's 11.5px body text lands at
+ * ~5.6pt. This variant moves the instruments block into the caption, shortens the
+ * card labels to one line each, and spends the recovered height on type: 16px body
+ * (~7.8pt), 17.5px headings (~8.5pt).
+ * Not used on the website — see src/pages/print/evaluation.astro.
+ */
+const cols = [
+  {
+    head: 'Inputs',
+    items: ['5 research mentors', 'REPACSS access', 'Lab facilities', 'External evaluator', 'Support letters'],
+  },
+  {
+    head: 'Activities',
+    items: ['Mentored research', 'Methods seminars', 'Weekly mentoring', 'Professional development'],
+  },
+  {
+    head: 'Outputs',
+    items: ['Reports & posters', 'Student talks', 'Code & datasets', 'Activity logs', 'Cohort records'],
+  },
+  {
+    head: 'Short-term outcomes',
+    items: ['AI + HPC skills', 'Research self-efficacy', 'Computing identity', 'Interest in grad study'],
+  },
+  {
+    head: 'Long-term outcomes',
+    items: ['Continued research', 'Publications', 'Conference talks', 'Grad enrollment', 'AI-ready careers'],
+  },
+];
+
+const points = [
+  { label: 'Pre-program', when: 'Week 1', items: ['Informed consent', 'Pre-program survey', 'CERP pre-test'], kind: 'formative' },
+  { label: 'Mid-program', when: 'Week 5', items: ['Mid-program review', 'CERP mid-program survey'], kind: 'formative' },
+  { label: 'Post-summer', when: 'Week 10', items: ['Post-summer survey', 'CERP post-test'], kind: 'summative' },
+  { label: 'One year later', when: '+12 months', items: ['CERP follow-up survey'], kind: 'summative' },
+  { label: 'Long term', when: 'at least 3 years', items: ['Email, LinkedIn, Discord', 'Career & degree tracking'], kind: 'summative' },
+];
+
+/* The canvas is a fixed 960x480. On the site the SVG is width:100% and fills its
+   container whatever the viewBox says, so the canvas only sets the printed type size:
+   at \linewidth in a 6.5in text block, printed pt = px * 0.75 * 624 / 960 = px * 0.4875.
+   The original figure spent its height on an instruments box and set 11.5px body text,
+   which printed at ~5.6pt; that block now lives in the caption, and the height it freed
+   goes into type — 16px body prints at ~7.8pt, headings at ~8.5pt. */
+const W = 960;
+const H = 480;
+const M = 16;
+const colW = 176;
+const gap = 12;
+
+const HEAD = 17.5;
+const ITEM = 16;
+const LINE = 21;
+
+/* Greedy wrap on an estimated character budget. Helvetica Neue — the face the PDF
+   export substitutes — averages close to half its point size per character at these
+   sizes, so a pixel budget divided by half the font size is within a character. */
+function wrap(text: string, budget: number, size: number) {
+  const max = Math.floor(budget / (size * 0.5));
+  const lines: string[] = [];
+  for (const word of text.split(' ')) {
+    const last = lines.length - 1;
+    if (last >= 0 && `${lines[last]} ${word}`.length <= max) lines[last] = `${lines[last]} ${word}`;
+    else lines.push(word);
+  }
+  return lines;
+}
+
+const heads = cols.map((c) => wrap(c.head, colW - 22, HEAD));
+const items = cols.map((c) => c.items.map((it) => wrap(it, colW - 22, ITEM)));
+
+/* Every card is drawn to the tallest card's height, so the row reads as one band. */
+const headRows = Math.max(...heads.map((h) => h.length));
+const itemRows = Math.max(...items.map((ls) => ls.reduce((n, l) => n + l.length, 0)));
+
+const ptItems = points.map((p) => p.items.map((it) => wrap(it, colW + gap + 16, ITEM)));
+const ptRows = Math.max(...ptItems.map((ls) => ls.reduce((n, l) => n + l.length, 0)));
+
+const cardY = 34;
+const headY = cardY + 24;
+const itemY = headY + headRows * 20 + 8;
+
+/* The content is laid out from its own line counts, then whatever the fixed canvas
+   has left over is shared between the cards and the gap above the schedule, so the
+   figure fills 480px instead of stacking to the top of it. */
+const contentH = itemY - cardY + itemRows * LINE + 8 + 34 + 30 + 28 + 36 + ptRows * LINE + 40 + cardY;
+const slack = Math.max(0, H - contentH);
+
+const cardH = itemY - cardY + itemRows * LINE + 8 + slack * 0.35;
+const cardMid = cardY + cardH / 2;
+
+const schedY = cardY + cardH + 34 + slack * 0.4;
+const axisY = schedY + 30;
+const ptLabelY = axisY + 28;
+const ptItemY = ptLabelY + 36;
+
+/* Timeline points sit on the logic-model column centres, so the two halves of the
+   figure share one rhythm. The text below each point may use the full column pitch. */
+const ptX = cols.map((_, i) => M + colW / 2 + i * (colW + gap));
+
+const legendY = H - 26;
+---
+
+<svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="evp-title evp-desc" class="eval-print-fig">
+  <title id="evp-title">Evaluation logic model and assessment schedule</title>
+  <desc id="evp-desc">
+    A logic model runs from inputs and activities through outputs to short-term and long-term student
+    outcomes. Below it, an assessment schedule marks five data-collection points: pre-program in Week 1,
+    mid-program in Week 5, post-summer in Week 10, a CERP follow-up one year later, and long-term
+    follow-up for at least three years.
+  </desc>
+
+  <defs>
+    <marker id="evp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--axis)" />
+    </marker>
+  </defs>
+
+  <text x={M} y="21" font-size="14" font-weight="700" letter-spacing="1" fill="var(--text-muted)">PROGRAM LOGIC MODEL</text>
+
+  {cols.map((c, i) => {
+    const x = M + i * (colW + gap);
+    let row = 0;
+    return (
+      /* Hovering one stage of the logic model dims the rest, so a reader can follow
+         inputs → activities → outputs → outcomes one column at a time. */
+      <g class="hl col">
+        {/* The card lifts on hover; the arrow to the next column stays put, so the
+            chain between stages does not wobble. */}
+        <g class="stagecard">
+          <rect class="stagebox" x={x} y={cardY} width={colW} height={cardH} rx="10" fill={i > 2 ? 'var(--surface-2)' : 'var(--surface-1)'} stroke="var(--border)" />
+          <rect x={x} y={cardY} width={colW} height="3" rx="1.5" fill={i > 2 ? 'var(--ord-3)' : 'var(--ord-2)'} />
+          {heads[i].map((line, j) => (
+            <text x={x + 11} y={headY + j * 20} font-size={HEAD} font-weight="700" fill="var(--text-primary)">{line}</text>
+          ))}
+          {items[i].map((lines) =>
+            lines.map((line, j) => (
+              <text x={x + (j === 0 ? 11 : 21)} y={itemY + row++ * LINE} font-size={ITEM} fill="var(--text-secondary)">
+                {j === 0 && <tspan fill="var(--axis)">› </tspan>}{line}
+              </text>
+            ))
+          )}
+        </g>
+        {i < cols.length - 1 && (
+          <path d={`M${x + colW + 1} ${cardMid} L${x + colW + gap - 2} ${cardMid}`} stroke="var(--axis)" stroke-width="2" marker-end="url(#evp-arrow)" />
+        )}
+      </g>
+    );
+  })}
+
+  <text x={M} y={schedY} font-size="14" font-weight="700" letter-spacing="1" fill="var(--text-muted)">ASSESSMENT SCHEDULE</text>
+
+  <line x1={ptX[0] - 40} y1={axisY} x2={ptX[4] + 40} y2={axisY} stroke="var(--border-strong)" stroke-width="2" />
+  {points.map((p, i) => {
+    let row = 0;
+    return (
+      <g class="point">
+        {/* Not marked .hl: the shared dim rule works across a whole figure, and dimming
+            the logic model while reading the schedule below it helps nobody. The point
+            gets its own accent instead. */}
+        {/* Unpainted at rest; it widens the hover target from the dot to the whole
+            column of labels beneath it. */}
+        <rect class="hit" x={ptX[i] - (colW + gap) / 2} y={axisY - 14} width={colW + gap} height={ptItemY - axisY + ptRows * LINE} fill="none" pointer-events="all" />
+        <circle class="dot" cx={ptX[i]} cy={axisY} r="6.5" fill={p.kind === 'formative' ? 'var(--ord-2)' : 'var(--ord-3)'} stroke="var(--surface-1)" stroke-width="2.5" />
+        <line x1={ptX[i]} y1={axisY + 8} x2={ptX[i]} y2={axisY + 22} stroke="var(--grid)" stroke-width="1.5" />
+        <text x={ptX[i]} y={ptLabelY} font-size="16.5" font-weight="700" text-anchor="middle" fill="var(--text-primary)">{p.label}</text>
+        <text x={ptX[i]} y={ptLabelY + 18} font-size="14.5" text-anchor="middle" fill="var(--text-muted)">{p.when}</text>
+        {ptItems[i].map((lines) =>
+          lines.map((line) => (
+            <text x={ptX[i]} y={ptItemY + row++ * LINE} font-size={ITEM} text-anchor="middle" fill="var(--text-secondary)">{line}</text>
+          ))
+        )}
+      </g>
+    );
+  })}
+
+  <g transform={`translate(${M}, ${legendY})`}>
+    <rect x="0" y="0" width="15" height="15" rx="3" fill="var(--ord-2)" />
+    <text x="20" y="11.5" font-size={ITEM} fill="var(--text-secondary)">Formative — improves the program while it runs</text>
+    <g transform="translate(470, 0)">
+      <rect x="0" y="0" width="15" height="15" rx="3" fill="var(--ord-3)" />
+      <text x="20" y="11.5" font-size={ITEM} fill="var(--text-secondary)">Summative — evidence the Site met its objectives</text>
+    </g>
+  </g>
+</svg>
+
+<style>
+  .eval-print-fig { min-width: 880px; }
+  /* A plain translate needs no origin; the dot's scale does, and transform-box
+     keeps that origin in the circle's own box rather than the SVG's. */
+  .eval-print-fig .stagecard { transition: transform 0.18s ease; }
+  .eval-print-fig .col:hover .stagecard { transform: translateY(-3px); }
+  .eval-print-fig .stagebox { transition: stroke 0.18s ease; }
+  .eval-print-fig .col:hover .stagebox { stroke: var(--border-strong); }
+  .eval-print-fig .dot { transform-box: fill-box; transform-origin: center; transition: transform 0.18s ease; }
+  .eval-print-fig .point:hover .dot { transform: scale(1.35); }
+  @media (prefers-reduced-motion: reduce) {
+    .eval-print-fig .stagecard, .eval-print-fig .stagebox, .eval-print-fig .dot { transition: none; }
+    .eval-print-fig .col:hover .stagecard, .eval-print-fig .point:hover .dot { transform: none; }
+  }
+</style>

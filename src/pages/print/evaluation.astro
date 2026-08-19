@@ -1,0 +1,22 @@
+---
+/**
+ * Export-only page: the print variant of the evaluation figure, rendered bare so
+ * `npm run export:figures` can read it out of dist/. Not linked from the site's
+ * navigation — it exists so the proposal can use a figure typed for paper while
+ * the website keeps the denser original.
+ */
+import '../../styles/global.css';
+import EvaluationFigurePrint from '../../components/figures/EvaluationFigurePrint.astro';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Evaluation logic model (print variant) · ASPIRE</title>
+  </head>
+  <body style="margin:0;padding:1.5rem;background:var(--surface-0)">
+    <EvaluationFigurePrint />
+  </body>
+</html>

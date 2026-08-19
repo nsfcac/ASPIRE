@@ -41,6 +41,19 @@ the data updates both.
 Data colors come from a colorblind-safe categorical palette (three all-pairs-validated hues) plus a
 single-hue ordinal ramp for phase progression; every colored mark is also directly labeled.
 
+Two figures have print-only variants, rendered by unlisted pages under `/print/` and exported in
+place of (or alongside) the web ones:
+
+`src/components/figures/EvaluationFigurePrint.astro`, rendered by `/print/evaluation`, is the
+evaluation figure typed for paper. At `\linewidth` in a 6.5in text block a 960px canvas scales by
+0.65, so printed pt = px × 0.4875 and the website figure's 11.5px body text lands at ~5.6pt. The
+print variant keeps the same 960×480 canvas but moves the instruments block into the caption,
+shortens the card labels to one line each, and spends the recovered height on type: 16px body
+(~7.8pt), 17.5px headings (~8.5pt). Its layout is computed from the content — card height, schedule
+rows and legend position all derive from wrapped line counts — so editing an item cannot overflow a
+card. `evaluation-logic-model.pdf` is exported from this variant; the website keeps the denser
+original, so a wording change has to be made in both files.
+
 A print-only variant of the framework figure lives in
 `src/components/figures/FrameworkFigureCompact.astro`, rendered by the unlisted page
 `/print/framework`. It carries the same content in a canvas ~30% shorter (960×520 vs 960×736) by

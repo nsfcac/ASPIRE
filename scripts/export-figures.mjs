@@ -29,7 +29,8 @@ const FIGURES = [
   { slug: 'mentor-project-map', page: 'mentors/index.html', cls: 'mentormap-fig' },
   { slug: 'recruitment-funnel', page: 'recruitment/index.html', cls: 'funnel-fig' },
   { slug: 'rubric-weights', page: 'recruitment/index.html', cls: 'rubric-fig' },
-  { slug: 'evaluation-logic-model', page: 'evaluation/index.html', cls: 'eval-fig' },
+  // Print variant: the proposal keeps the slug, the website keeps the denser original.
+  { slug: 'evaluation-logic-model', page: 'print/evaluation/index.html', cls: 'eval-print-fig' },
   // Print-only variant; the web page keeps the taller original.
   { slug: 'program-framework-compact', page: 'print/framework/index.html', cls: 'framework-compact-fig' },
 ];
